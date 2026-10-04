@@ -1652,7 +1652,7 @@ flutter --version
 </ul>
 <h4 id="mobile-setup-43-tell-the-ide-where-flutter-is">4.3 Tell the IDE where Flutter is</h4>
 <p>In Android Studio, open <strong>Settings</strong> (on macOS: <strong>Android Studio → Settings</strong>), then <strong>Languages &amp; Frameworks → Flutter</strong>, and set <strong>Flutter SDK path</strong> to your Flutter folder, for example <code>~/development/flutter</code>. The Dart SDK is found from it.</p>
-
+<figure><img src="assets/screenshots/mobile/03-android-studio-flutter-sdk.png" alt="Android Studio → Settings → Languages &amp; Frameworks → Flutter: the Flutter SDK path" /><figcaption>Figure 16: Android Studio → Settings → Languages &amp; Frameworks → Flutter: the Flutter SDK path</figcaption></figure>
 <p>VS Code finds Flutter on your <code>PATH</code>. If it doesn't, open the Command Palette and run <strong>Flutter: Change SDK</strong>.</p>
 <h4 id="mobile-setup-44-install-the-packages">4.4 Install the packages</h4>
 <pre><code class="language-bash">flutter pub get
@@ -1744,13 +1744,13 @@ Copy-Item ios\Flutter\Secrets.xcconfig.example ios\Flutter\Secrets.xcconfig
 <li>Search for <strong>Flutter</strong> and click <strong>Install</strong>. Android Studio installs the <strong>Dart</strong> plugin with it.</li>
 <li>Click <strong>Restart IDE</strong>.</li>
 </ol>
-
+<figure><img src="assets/screenshots/mobile/03-android-studio-flutter-plugin.png" alt="Android Studio → Settings → Plugins: the Flutter plugin, which installs Dart too" /><figcaption>Figure 17: Android Studio → Settings → Plugins: the Flutter plugin, which installs Dart too</figcaption></figure>
 <h4 id="mobile-setup-53-install-the-android-sdk-packages">5.3 Install the Android SDK packages</h4>
 <p>Open <strong>Settings → Languages &amp; Frameworks → Android SDK</strong> (or <strong>Tools → SDK Manager</strong>):</p>
 <ol>
 <li>
 <p>On the <strong>SDK Platforms</strong> tab, tick <strong>Android 16.0 (&quot;Baklava&quot;)</strong>, which is API level 36, and click <strong>Apply</strong>.</p>
-
+<figure><img src="assets/screenshots/mobile/04-android-sdk-platforms.png" alt="SDK Manager → SDK Platforms: Android 16.0 (API 36) installed" /><figcaption>Figure 18: SDK Manager → SDK Platforms: Android 16.0 (API 36) installed</figcaption></figure>
 </li>
 <li>
 <p>On the <strong>SDK Tools</strong> tab, tick these and click <strong>Apply</strong>:</p>
@@ -1761,7 +1761,7 @@ Copy-Item ios\Flutter\Secrets.xcconfig.example ios\Flutter\Secrets.xcconfig
 <li><strong>Android SDK Platform-Tools</strong></li>
 <li>Optional: tick <strong>Show Package Details</strong> and choose <strong>NDK (Side by side) → 28.2.13676358</strong>. Otherwise Gradle downloads it during the first build.</li>
 </ul>
-
+<figure><img src="assets/screenshots/mobile/04-android-sdk-tools.png" alt="SDK Manager → SDK Tools: Build-Tools, Command-line Tools, Emulator and Platform-Tools" /><figcaption>Figure 19: SDK Manager → SDK Tools: Build-Tools, Command-line Tools, Emulator and Platform-Tools</figcaption></figure>
 </li>
 <li>
 <p>Accept the SDK licences in a terminal, answering <code>y</code> to each:</p>
@@ -1801,7 +1801,7 @@ Copy-Item ios\Flutter\Secrets.xcconfig.example ios\Flutter\Secrets.xcconfig
 <li>Choose a system image for <strong>API 36</strong> that includes <strong>Google Play</strong> or <strong>Google APIs</strong> (Google Maps and push notifications need Google Play services). Use <code>arm64-v8a</code> on an Apple silicon Mac and <code>x86_64</code> on Intel or AMD computers. Download it, then click <strong>Next</strong> and <strong>Finish</strong>.</li>
 <li>Click ▶ next to the new device to start it.</li>
 </ol>
-
+<figure><img src="assets/screenshots/mobile/05-android-device-manager.png" alt="Android Studio → Device Manager: an emulator (Virtual) and a phone connected over USB (Physical)" /><figcaption>Figure 20: Android Studio → Device Manager: an emulator (Virtual) and a phone connected over USB (Physical)</figcaption></figure>
 <h4 id="mobile-setup-57-connect-an-android-phone">5.7 Connect an Android phone</h4>
 <ol>
 <li>On the phone, open <strong>Settings → About phone</strong> and tap <strong>Build number</strong> seven times. <strong>Developer options</strong> appears (under <strong>Settings → System</strong> on many phones).</li>
@@ -1816,8 +1816,8 @@ Copy-Item ios\Flutter\Secrets.xcconfig.example ios\Flutter\Secrets.xcconfig
 <li>Make sure <strong>main.dart</strong> is the selected run configuration.</li>
 <li>Click <strong>Run</strong> ▶ (or <strong>Debug</strong>). The first build takes a few minutes.</li>
 </ol>
-
-<figure><img src="assets/screenshots/mobile/05-android-emulator.png" alt="RideX Rider on an Android emulator (Pixel 8, Android 16) right after installing: the sign-in screen has loaded its settings from the backend" /><figcaption>Figure 16: RideX Rider on an Android emulator (Pixel 8, Android 16) right after installing: the sign-in screen has loaded its settings from the backend</figcaption></figure>
+<figure><img src="assets/screenshots/mobile/05-android-studio-run.png" alt="Android Studio toolbar: the device menu, the main.dart configuration and the Run button" /><figcaption>Figure 21: Android Studio toolbar: the device menu, the main.dart configuration and the Run button</figcaption></figure>
+<figure><img src="assets/screenshots/mobile/05-android-emulator.png" alt="RideX Rider on an Android emulator (Pixel 8, Android 16) right after installing: the sign-in screen has loaded its settings from the backend" /><figcaption>Figure 22: RideX Rider on an Android emulator (Pixel 8, Android 16) right after installing: the sign-in screen has loaded its settings from the backend</figcaption></figure>
 <h3 id="mobile-setup-6-android-configuration">6. Android Configuration</h3>
 <h4 id="mobile-setup-61-where-things-are">6.1 Where things are</h4>
 <table>
@@ -1896,8 +1896,8 @@ Copy-Item ios\Flutter\Secrets.xcconfig.example ios\Flutter\Secrets.xcconfig
 <p>Paste the key into <code>android/secrets.properties</code> of each app:</p>
 <pre><code class="language-properties">MAPS_API_KEY=YOUR_ANDROID_MAPS_KEY
 </code></pre>
-<figure><img src="assets/figures/mobile/rider/android-maps-key.png" alt="Rider app: your Maps key goes after MAPS_API_KEY= in android/secrets.properties, copied from the .example file in section 4.5" /><figcaption>Figure 17: Rider app: your Maps key goes after MAPS_API_KEY= in android/secrets.properties, copied from the .example file in section 4.5</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/android-maps-key.png" alt="Driver app: your Maps key goes after MAPS_API_KEY= in android/secrets.properties, copied from the .example file in section 4.5" /><figcaption>Figure 18: Driver app: your Maps key goes after MAPS_API_KEY= in android/secrets.properties, copied from the .example file in section 4.5</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/android-maps-key.png" alt="Rider app: your Maps key goes after MAPS_API_KEY= in android/secrets.properties, copied from the .example file in section 4.5" /><figcaption>Figure 23: Rider app: your Maps key goes after MAPS_API_KEY= in android/secrets.properties, copied from the .example file in section 4.5</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/android-maps-key.png" alt="Driver app: your Maps key goes after MAPS_API_KEY= in android/secrets.properties, copied from the .example file in section 4.5" /><figcaption>Figure 24: Driver app: your Maps key goes after MAPS_API_KEY= in android/secrets.properties, copied from the .example file in section 4.5</figcaption></figure>
 </li>
 </ol>
 <p>The build copies the key into the app's manifest (<code>com.google.android.geo.API_KEY</code>), so no code changes are needed. Without a key the app still works, but the map has no streets. Place search and routes don't use this key: they go through the backend's server key (<a href="#deployment-google-maps">Google Maps</a>).</p>
@@ -1955,7 +1955,7 @@ Pod installation complete! There are 18 dependencies from the Podfile and 45 tot
 </code></pre>
 <p>Always open <code>Runner.xcworkspace</code>, not <code>Runner.xcodeproj</code>: only the workspace includes the plugins.</p>
 <p>In the project navigator, select <strong>Runner</strong> (the blue icon), then <strong>TARGETS → Runner</strong>. The <strong>General</strong> tab shows the display name, bundle identifier, version and minimum iOS version.</p>
-
+<figure><img src="assets/screenshots/mobile/06-xcode-project.png" alt="Xcode: TARGETS → Runner → General, with the display name, bundle identifier, version and minimum deployment (iOS 15.0)" /><figcaption>Figure 25: Xcode: TARGETS → Runner → General, with the display name, bundle identifier, version and minimum deployment (iOS 15.0)</figcaption></figure>
 <h4 id="mobile-setup-75-add-your-apple-account">7.5 Add your Apple account</h4>
 <p>Open <strong>Xcode → Settings → Accounts</strong>, click <strong>+</strong> and sign in with your Apple ID. A free account can run the app on your own iPhone. Push notifications, Sign in with Apple and App Store releases need a paid Apple Developer Program membership.</p>
 <h4 id="mobile-setup-76-set-the-team-and-bundle-identifier">7.6 Set the team and bundle identifier</h4>
@@ -1967,7 +1967,7 @@ Pod installation complete! There are 18 dependencies from the Podfile and 45 tot
 <li>Select <strong>TARGETS → RunnerTests</strong> and do the same, with your ID followed by <code>.RunnerTests</code>.</li>
 </ol>
 <p>Xcode creates the signing certificate and the provisioning profile for you.</p>
-
+<figure><img src="assets/screenshots/mobile/07-xcode-signing.png" alt="Xcode → Signing &amp; Capabilities: Automatically manage signing, the Team menu and the bundle identifier; until you pick a team, Xcode warns that signing needs one" /><figcaption>Figure 26: Xcode → Signing &amp; Capabilities: Automatically manage signing, the Team menu and the bundle identifier; until you pick a team, Xcode warns that signing needs one</figcaption></figure>
 <h4 id="mobile-setup-77-add-the-capabilities">7.7 Add the capabilities</h4>
 <p>With a paid team, click <strong>+ Capability</strong> on the <strong>Signing &amp; Capabilities</strong> tab and add:</p>
 <ul>
@@ -1976,7 +1976,7 @@ Pod installation complete! There are 18 dependencies from the Podfile and 45 tot
 <li><strong>App Attest</strong>, for App Check (10.3). Then open <code>Runner/Runner.entitlements</code> and set <strong>App Attest Environment</strong> (<code>com.apple.developer.devicecheck.appattest-environment</code>) to <code>production</code>, because App Check doesn't accept tokens from Apple's development environment.</li>
 </ul>
 <p>The background modes are already set in <code>Info.plist</code>: Remote notifications in both apps, plus Location updates in the driver app.</p>
-
+<figure><img src="assets/screenshots/mobile/07-xcode-capabilities.png" alt="Xcode: Push Notifications and Sign in with Apple added to the Runner target" /><figcaption>Figure 27: Xcode: Push Notifications and Sign in with Apple added to the Runner target</figcaption></figure>
 <h4 id="mobile-setup-78-deployment-target">7.8 Deployment target</h4>
 <p><strong>General → Minimum Deployments</strong> is <strong>iOS 15.0</strong>. The Podfile uses the same version (<code>platform :ios, '15.0'</code>) and raises the plugins to it after <code>pod install</code>. Don't lower it.</p>
 <h4 id="mobile-setup-79-run-from-xcode">7.9 Run from Xcode</h4>
@@ -2056,8 +2056,8 @@ Pod installation complete! There are 18 dependencies from the Podfile and 45 tot
 <p>Paste it into <code>ios/Flutter/Secrets.xcconfig</code> of each app:</p>
 <pre><code class="language-text">MAPS_API_KEY=YOUR_IOS_MAPS_KEY
 </code></pre>
-<figure><img src="assets/figures/mobile/rider/ios-maps-key.png" alt="Rider app: your Maps key goes after MAPS_API_KEY= in ios/Flutter/Secrets.xcconfig, copied from the .example file in section 4.5" /><figcaption>Figure 19: Rider app: your Maps key goes after MAPS_API_KEY= in ios/Flutter/Secrets.xcconfig, copied from the .example file in section 4.5</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/ios-maps-key.png" alt="Driver app: your Maps key goes after MAPS_API_KEY= in ios/Flutter/Secrets.xcconfig, copied from the .example file in section 4.5" /><figcaption>Figure 20: Driver app: your Maps key goes after MAPS_API_KEY= in ios/Flutter/Secrets.xcconfig, copied from the .example file in section 4.5</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/ios-maps-key.png" alt="Rider app: your Maps key goes after MAPS_API_KEY= in ios/Flutter/Secrets.xcconfig, copied from the .example file in section 4.5" /><figcaption>Figure 28: Rider app: your Maps key goes after MAPS_API_KEY= in ios/Flutter/Secrets.xcconfig, copied from the .example file in section 4.5</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/ios-maps-key.png" alt="Driver app: your Maps key goes after MAPS_API_KEY= in ios/Flutter/Secrets.xcconfig, copied from the .example file in section 4.5" /><figcaption>Figure 29: Driver app: your Maps key goes after MAPS_API_KEY= in ios/Flutter/Secrets.xcconfig, copied from the .example file in section 4.5</figcaption></figure>
 </li>
 <li>
 <p>Stop the app and run it again. The key is built into <code>Info.plist</code> (as <code>GMSApiKey</code>), so a hot reload doesn't pick it up.</p>
@@ -2070,8 +2070,8 @@ Pod installation complete! There are 18 dependencies from the Podfile and 45 tot
 GOOGLE_REVERSED_CLIENT_ID=YOUR_REVERSED_CLIENT_ID
 FIREBASE_ENCODED_APP_ID=YOUR_ENCODED_APP_ID
 </code></pre>
-<figure><img src="assets/figures/mobile/rider/ios-sign-in-values.png" alt="Rider app: the sign-in lines in ios/Flutter/Secrets.xcconfig; remove the // in front and add your value after =" /><figcaption>Figure 21: Rider app: the sign-in lines in ios/Flutter/Secrets.xcconfig; remove the // in front and add your value after =</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/ios-sign-in-values.png" alt="Driver app: the sign-in lines in ios/Flutter/Secrets.xcconfig; remove the // in front and add your value after =" /><figcaption>Figure 22: Driver app: the sign-in lines in ios/Flutter/Secrets.xcconfig; remove the // in front and add your value after =</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/ios-sign-in-values.png" alt="Rider app: the sign-in lines in ios/Flutter/Secrets.xcconfig; remove the // in front and add your value after =" /><figcaption>Figure 30: Rider app: the sign-in lines in ios/Flutter/Secrets.xcconfig; remove the // in front and add your value after =</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/ios-sign-in-values.png" alt="Driver app: the sign-in lines in ios/Flutter/Secrets.xcconfig; remove the // in front and add your value after =" /><figcaption>Figure 31: Driver app: the sign-in lines in ios/Flutter/Secrets.xcconfig; remove the // in front and add your value after =</figcaption></figure>
 <table>
 <thead>
 <tr>
@@ -2133,8 +2133,8 @@ FIREBASE_ENCODED_APP_ID=YOUR_ENCODED_APP_ID
 </tr>
 </tbody>
 </table>
-<figure><img src="assets/figures/mobile/rider/ios-permission-texts.png" alt="Rider app: the permission texts iOS shows, in ios/Runner/Info.plist" /><figcaption>Figure 23: Rider app: the permission texts iOS shows, in ios/Runner/Info.plist</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/ios-permission-texts.png" alt="Driver app: the permission texts iOS shows, in ios/Runner/Info.plist" /><figcaption>Figure 24: Driver app: the permission texts iOS shows, in ios/Runner/Info.plist</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/ios-permission-texts.png" alt="Rider app: the permission texts iOS shows, in ios/Runner/Info.plist" /><figcaption>Figure 32: Rider app: the permission texts iOS shows, in ios/Runner/Info.plist</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/ios-permission-texts.png" alt="Driver app: the permission texts iOS shows, in ios/Runner/Info.plist" /><figcaption>Figure 33: Driver app: the permission texts iOS shows, in ios/Runner/Info.plist</figcaption></figure>
 <h4 id="mobile-setup-85-http-and-https">8.5 HTTP and HTTPS</h4>
 <p><code>Info.plist</code> sets <code>NSAppTransportSecurity → NSAllowsLocalNetworking</code> to <code>YES</code>, so debug builds on the simulator can reach a backend on your Mac over <code>http://</code>. Release builds only accept an <code>https://</code> address (section 9.5).</p>
 <h3 id="mobile-setup-9-api-configuration">9. API Configuration</h3>
@@ -2193,7 +2193,7 @@ flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000
 <ul>
 <li>
 <p><strong>Android Studio:</strong> <strong>Run → Edit Configurations…</strong>, select <strong>main.dart</strong>, and enter <code>--dart-define=API_BASE_URL=https://your-domain.com</code> in <strong>Additional run args</strong>.</p>
-
+<figure><img src="assets/screenshots/mobile/09-android-studio-run-args.png" alt="Android Studio → Run → Edit Configurations → main.dart: the backend address in Additional run args (here the local address a phone on USB uses, 9.3)" /><figcaption>Figure 34: Android Studio → Run → Edit Configurations → main.dart: the backend address in Additional run args (here the local address a phone on USB uses, 9.3)</figcaption></figure>
 </li>
 <li>
 <p><strong>VS Code:</strong> add the argument to <code>.vscode/launch.json</code>:</p>
@@ -2276,7 +2276,7 @@ flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000
 <ol>
 <li>
 <p>Open the <a href="https://console.firebase.google.com">Firebase console</a>, click <strong>Create a project</strong> and give it a name. Google Analytics isn't used by RideX, so you can leave it off.</p>
-
+<figure><img src="assets/screenshots/mobile/10-firebase-create-project.png" alt="Firebase console: creating the project" /><figcaption>Figure 35: Firebase console: creating the project</figcaption></figure>
 </li>
 <li>
 <p>Set up the parts the backend needs: the Realtime Database, Authentication, and the service account key you upload in the admin panel, after which you press <strong>Deploy rules</strong>. Follow <a href="#deployment-firebase-push-notifications-and-live-tracking">Firebase (push notifications and live tracking)</a> in the deployment guide.</p>
@@ -2296,16 +2296,16 @@ flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000
 </li>
 <li>
 <p>Click <strong>Register app</strong>.</p>
-
+<figure><img src="assets/screenshots/mobile/10-firebase-android-app.png" alt="Firebase console → Add app → Android: type your package name exactly as applicationId; the one in this picture is only an example" /><figcaption>Figure 36: Firebase console → Add app → Android: type your package name exactly as applicationId; the one in this picture is only an example</figcaption></figure>
 </li>
 <li>
 <p>Click <strong>Download google-services.json</strong>.</p>
-
+<figure><img src="assets/screenshots/mobile/10-firebase-google-services-json.png" alt="Firebase console → Project settings → Your apps: google-services.json, which you can download here again at any time" /><figcaption>Figure 37: Firebase console → Project settings → Your apps: google-services.json, which you can download here again at any time</figcaption></figure>
 </li>
 <li>
 <p>Put the file in the app's <code>android/app/</code> folder: <code>ridex_rider/android/app/google-services.json</code> for the rider app, and the driver's file in <code>ridex_driver/android/app/</code>.</p>
-<figure><img src="assets/figures/mobile/rider/android-firebase-file.png" alt="Rider app: google-services.json goes in android/app/" /><figcaption>Figure 25: Rider app: google-services.json goes in android/app/</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/android-firebase-file.png" alt="Driver app: google-services.json goes in android/app/" /><figcaption>Figure 26: Driver app: google-services.json goes in android/app/</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/android-firebase-file.png" alt="Rider app: google-services.json goes in android/app/" /><figcaption>Figure 38: Rider app: google-services.json goes in android/app/</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/android-firebase-file.png" alt="Driver app: google-services.json goes in android/app/" /><figcaption>Figure 39: Driver app: google-services.json goes in android/app/</figcaption></figure>
 </li>
 <li>
 <p>Skip the console's remaining steps, which add the Firebase SDK and plugin: the project already has them. <code>android/settings.gradle.kts</code> declares the Google services plugin (<code>com.google.gms.google-services</code> 4.4.4) and <code>android/app/build.gradle.kts</code> applies it. The <code>googleServices</code> block at the end of that file turns a missing file into a warning, which is how the app builds without Firebase.</p>
@@ -2327,12 +2327,12 @@ flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000
 </li>
 <li>
 <p>Click <strong>Register app</strong>, then <strong>Download GoogleService-Info.plist</strong>.</p>
-
+<figure><img src="assets/screenshots/mobile/11-firebase-ios-app.png" alt="Firebase console → Add app → Apple: type your bundle ID exactly as in Xcode; the one in this picture is only an example" /><figcaption>Figure 40: Firebase console → Add app → Apple: type your bundle ID exactly as in Xcode; the one in this picture is only an example</figcaption></figure>
 </li>
 <li>
 <p>Copy the file to <code>ios/Runner/GoogleService-Info.plist</code> of the app, in Finder or with <code>cp</code>. You don't add it in Xcode: the <strong>Copy Firebase Config</strong> build phase (Runner target → <strong>Build Phases</strong>) copies it into the app when it's there, and the app builds without Firebase when it isn't.</p>
-<figure><img src="assets/figures/mobile/rider/ios-firebase-file.png" alt="Rider app: GoogleService-Info.plist goes in ios/Runner/" /><figcaption>Figure 27: Rider app: GoogleService-Info.plist goes in ios/Runner/</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/ios-firebase-file.png" alt="Driver app: GoogleService-Info.plist goes in ios/Runner/" /><figcaption>Figure 28: Driver app: GoogleService-Info.plist goes in ios/Runner/</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/ios-firebase-file.png" alt="Rider app: GoogleService-Info.plist goes in ios/Runner/" /><figcaption>Figure 41: Rider app: GoogleService-Info.plist goes in ios/Runner/</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/ios-firebase-file.png" alt="Driver app: GoogleService-Info.plist goes in ios/Runner/" /><figcaption>Figure 42: Driver app: GoogleService-Info.plist goes in ios/Runner/</figcaption></figure>
 </li>
 <li>
 <p>Skip the console's remaining steps, which add the SDK and initialization code: the project already has them. CocoaPods installs the Firebase SDK, and the app starts Firebase itself.</p>
@@ -2344,7 +2344,7 @@ flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000
 <li>In the Firebase console, open <strong>Project settings → Cloud Messaging → Apple app configuration</strong>, and under <strong>APNs Authentication Key</strong> click <strong>Upload</strong>. Choose the <code>.p8</code> file and enter the Key ID and your Team ID. One key covers both apps.</li>
 <li>In Xcode, add the <strong>Push Notifications</strong> capability (section 7.7).</li>
 </ol>
-
+<figure><img src="assets/screenshots/mobile/11-firebase-apns-key.png" alt="Firebase console → Project settings → Cloud Messaging: the APNs authentication key" /><figcaption>Figure 43: Firebase console → Project settings → Cloud Messaging: the APNs authentication key</figcaption></figure>
 </li>
 <li>
 <p>Build and run the app (section 12.2).</p>
@@ -2522,11 +2522,11 @@ flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000
 </table>
 <h4 id="mobile-setup-111-app-name">11.1 App name</h4>
 <p><strong>Android:</strong> change <code>android:label</code> in <code>android/app/src/main/AndroidManifest.xml</code>.</p>
-<figure><img src="assets/figures/mobile/rider/android-app-name.png" alt="Rider app: the name under the icon is android:label in android/app/src/main/AndroidManifest.xml" /><figcaption>Figure 29: Rider app: the name under the icon is android:label in android/app/src/main/AndroidManifest.xml</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/android-app-name.png" alt="Driver app: the name under the icon is android:label in android/app/src/main/AndroidManifest.xml" /><figcaption>Figure 30: Driver app: the name under the icon is android:label in android/app/src/main/AndroidManifest.xml</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/android-app-name.png" alt="Rider app: the name under the icon is android:label in android/app/src/main/AndroidManifest.xml" /><figcaption>Figure 44: Rider app: the name under the icon is android:label in android/app/src/main/AndroidManifest.xml</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/android-app-name.png" alt="Driver app: the name under the icon is android:label in android/app/src/main/AndroidManifest.xml" /><figcaption>Figure 45: Driver app: the name under the icon is android:label in android/app/src/main/AndroidManifest.xml</figcaption></figure>
 <p><strong>iOS:</strong> change <code>CFBundleDisplayName</code> (the name under the icon) and <code>CFBundleName</code> in <code>ios/Runner/Info.plist</code>.</p>
-<figure><img src="assets/figures/mobile/rider/ios-app-name.png" alt="Rider app: the app name is CFBundleDisplayName (under the icon) and CFBundleName in ios/Runner/Info.plist" /><figcaption>Figure 31: Rider app: the app name is CFBundleDisplayName (under the icon) and CFBundleName in ios/Runner/Info.plist</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/ios-app-name.png" alt="Driver app: the app name is CFBundleDisplayName (under the icon) and CFBundleName in ios/Runner/Info.plist" /><figcaption>Figure 32: Driver app: the app name is CFBundleDisplayName (under the icon) and CFBundleName in ios/Runner/Info.plist</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/ios-app-name.png" alt="Rider app: the app name is CFBundleDisplayName (under the icon) and CFBundleName in ios/Runner/Info.plist" /><figcaption>Figure 46: Rider app: the app name is CFBundleDisplayName (under the icon) and CFBundleName in ios/Runner/Info.plist</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/ios-app-name.png" alt="Driver app: the app name is CFBundleDisplayName (under the icon) and CFBundleName in ios/Runner/Info.plist" /><figcaption>Figure 47: Driver app: the app name is CFBundleDisplayName (under the icon) and CFBundleName in ios/Runner/Info.plist</figcaption></figure>
 <p>The names shown inside the app, its colours and its logo come from the backend (<strong>Admin → Settings → General</strong>), so they change without a new build.</p>
 <h4 id="mobile-setup-112-package-name-and-bundle-id">11.2 Package name and bundle ID</h4>
 <p>Every store app needs its own ID, and Google Play and the App Store don't let you change it after the first release. Use a reverse domain you own, such as <code>com.yourcompany.taxi</code> for the rider app and <code>com.yourcompany.taxi.driver</code> for the driver app.</p>
@@ -2538,8 +2538,8 @@ flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000
 // …
 applicationId = &quot;com.yourcompany.taxi&quot;
 </code></pre>
-<figure><img src="assets/figures/mobile/rider/android-package-name.png" alt="Rider app: the package name is namespace and applicationId in android/app/build.gradle.kts" /><figcaption>Figure 33: Rider app: the package name is namespace and applicationId in android/app/build.gradle.kts</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/android-package-name.png" alt="Driver app: the package name is namespace and applicationId in android/app/build.gradle.kts" /><figcaption>Figure 34: Driver app: the package name is namespace and applicationId in android/app/build.gradle.kts</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/android-package-name.png" alt="Rider app: the package name is namespace and applicationId in android/app/build.gradle.kts" /><figcaption>Figure 48: Rider app: the package name is namespace and applicationId in android/app/build.gradle.kts</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/android-package-name.png" alt="Driver app: the package name is namespace and applicationId in android/app/build.gradle.kts" /><figcaption>Figure 49: Driver app: the package name is namespace and applicationId in android/app/build.gradle.kts</figcaption></figure>
 </li>
 <li>
 <p>Move <code>android/app/src/main/kotlin/com/codercampapp/ridex/rider/MainActivity.kt</code> to a folder that matches the new name, for example <code>android/app/src/main/kotlin/com/yourcompany/taxi/MainActivity.kt</code>, and delete the old empty folders.</p>
@@ -2548,8 +2548,8 @@ applicationId = &quot;com.yourcompany.taxi&quot;
 <p>Change the first line of <code>MainActivity.kt</code> to the new package:</p>
 <pre><code class="language-kotlin">package com.yourcompany.taxi
 </code></pre>
-<figure><img src="assets/figures/mobile/rider/android-main-activity.png" alt="Rider app: the folders of MainActivity.kt and its first line follow the package name" /><figcaption>Figure 35: Rider app: the folders of MainActivity.kt and its first line follow the package name</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/android-main-activity.png" alt="Driver app: the folders of MainActivity.kt and its first line follow the package name" /><figcaption>Figure 36: Driver app: the folders of MainActivity.kt and its first line follow the package name</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/android-main-activity.png" alt="Rider app: the folders of MainActivity.kt and its first line follow the package name" /><figcaption>Figure 50: Rider app: the folders of MainActivity.kt and its first line follow the package name</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/android-main-activity.png" alt="Driver app: the folders of MainActivity.kt and its first line follow the package name" /><figcaption>Figure 51: Driver app: the folders of MainActivity.kt and its first line follow the package name</figcaption></figure>
 </li>
 </ol>
 <p><strong>iOS:</strong> in Xcode, set the <strong>Bundle Identifier</strong> of <strong>Runner</strong> and <strong>RunnerTests</strong> (section 7.6).</p>
@@ -2574,8 +2574,8 @@ flutter run
 </ol>
 <h4 id="mobile-setup-113-version">11.3 Version</h4>
 <p><code>version: 1.0.0+1</code> in <code>pubspec.yaml</code> sets both platforms: <code>1.0.0</code> is the version users see (Android <code>versionName</code>, iOS <code>CFBundleShortVersionString</code>), and <code>1</code> is the build number (Android <code>versionCode</code>, iOS <code>CFBundleVersion</code>). Raise the build number for every upload to the stores. You can also set them per build with <code>--build-name=1.2.0 --build-number=5</code>.</p>
-<figure><img src="assets/figures/mobile/rider/version.png" alt="Rider app: version 1.0.0 and build number 1 in pubspec.yaml" /><figcaption>Figure 37: Rider app: version 1.0.0 and build number 1 in pubspec.yaml</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/version.png" alt="Driver app: version 1.0.0 and build number 1 in pubspec.yaml" /><figcaption>Figure 38: Driver app: version 1.0.0 and build number 1 in pubspec.yaml</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/version.png" alt="Rider app: version 1.0.0 and build number 1 in pubspec.yaml" /><figcaption>Figure 52: Rider app: version 1.0.0 and build number 1 in pubspec.yaml</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/version.png" alt="Driver app: version 1.0.0 and build number 1 in pubspec.yaml" /><figcaption>Figure 53: Driver app: version 1.0.0 and build number 1 in pubspec.yaml</figcaption></figure>
 <h4 id="mobile-setup-114-app-icon-and-splash-screen">11.4 App icon and splash screen</h4>
 <p>Replace the images in <code>assets/branding/</code> and keep their sizes:</p>
 <table>
@@ -2605,8 +2605,8 @@ flutter run
 </tbody>
 </table>
 <p>The <code>.svg</code> files next to them are the editable originals. Set the background colours in <code>pubspec.yaml</code>: <code>adaptive_icon_background</code> under <code>flutter_launcher_icons</code>, and <code>color</code> (twice, including under <code>android_12</code>) under <code>flutter_native_splash</code>.</p>
-<figure><img src="assets/figures/mobile/rider/app-icon-and-splash.png" alt="Rider app: the images to replace in assets/branding/, and their background colour (#0F9D58) in pubspec.yaml" /><figcaption>Figure 39: Rider app: the images to replace in assets/branding/, and their background colour (#0F9D58) in pubspec.yaml</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/app-icon-and-splash.png" alt="Driver app: the images to replace in assets/branding/, and their background colour (#111827) in pubspec.yaml" /><figcaption>Figure 40: Driver app: the images to replace in assets/branding/, and their background colour (#111827) in pubspec.yaml</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/app-icon-and-splash.png" alt="Rider app: the images to replace in assets/branding/, and their background colour (#0F9D58) in pubspec.yaml" /><figcaption>Figure 54: Rider app: the images to replace in assets/branding/, and their background colour (#0F9D58) in pubspec.yaml</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/app-icon-and-splash.png" alt="Driver app: the images to replace in assets/branding/, and their background colour (#111827) in pubspec.yaml" /><figcaption>Figure 55: Driver app: the images to replace in assets/branding/, and their background colour (#111827) in pubspec.yaml</figcaption></figure>
 <p>Then generate every Android and iOS size:</p>
 <pre><code class="language-bash">dart run flutter_launcher_icons
 dart run flutter_native_splash:create
@@ -2667,7 +2667,7 @@ flutter run -d &quot;iPhone 17 Pro&quot;
 <p>Give the simulator a location: <strong>Features → Location → Custom Location…</strong>, enter a latitude and longitude, and click <strong>OK</strong>.</p>
 </li>
 </ol>
-<figure><img src="assets/screenshots/mobile/08-ios-simulator.png" alt="RideX Rider on the iPhone 17 Pro simulator after signing in, with a custom location: the map and the pickup address from the backend" /><figcaption>Figure 41: RideX Rider on the iPhone 17 Pro simulator after signing in, with a custom location: the map and the pickup address from the backend</figcaption></figure>
+<figure><img src="assets/screenshots/mobile/08-ios-simulator.png" alt="RideX Rider on the iPhone 17 Pro simulator after signing in, with a custom location: the map and the pickup address from the backend" /><figcaption>Figure 56: RideX Rider on the iPhone 17 Pro simulator after signing in, with a custom location: the map and the pickup address from the backend</figcaption></figure>
 <p><strong>On an iPhone:</strong></p>
 <ol>
 <li>Connect it with a cable, unlock it and tap <strong>Trust</strong> on the phone.</li>
@@ -2690,7 +2690,7 @@ flutter run -d &quot;iPhone 17 Pro&quot;
 <pre><code class="language-bash">keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
 </code></pre>
 <p><code>keytool</code> asks for a password twice (nothing appears while you type it), then for your name, organisation and country, and saves the keystore. Both apps can use the same upload keystore. Store the keystore and its password somewhere safe, outside the project. With Google Play App Signing, Google keeps the key that signs the app on users' phones, and this upload key only proves that an upload comes from you.</p>
-<figure><img src="assets/figures/mobile/keytool-upload-keystore.png" alt="Creating the upload keystore with keytool: what you type is shown in blue" /><figcaption>Figure 42: Creating the upload keystore with keytool: what you type is shown in blue</figcaption></figure>
+<figure><img src="assets/figures/mobile/keytool-upload-keystore.png" alt="Creating the upload keystore with keytool: what you type is shown in blue" /><figcaption>Figure 57: Creating the upload keystore with keytool: what you type is shown in blue</figcaption></figure>
 <h4 id="mobile-setup-135-create-keyproperties">13.5 Create key.properties</h4>
 <p>Do this in each app's folder:</p>
 <pre><code class="language-bash">cp android/key.properties.example android/key.properties
@@ -2702,8 +2702,8 @@ keyAlias=upload
 keyPassword=YOUR_KEYSTORE_PASSWORD
 </code></pre>
 <p><code>keytool</code> gives the keystore and its key one password, so <code>keyPassword</code> is the same as <code>storePassword</code>. On Windows, write the path with forward slashes, for example <code>storeFile=C:/Users/you/upload-keystore.jks</code>. <code>key.properties</code>, <code>*.jks</code> and <code>*.keystore</code> are listed in <code>android/.gitignore</code>. Never commit or share them.</p>
-<figure><img src="assets/figures/mobile/rider/android-key-properties.png" alt="Rider app: a filled-in android/key.properties, next to key.properties.example" /><figcaption>Figure 43: Rider app: a filled-in android/key.properties, next to key.properties.example</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/android-key-properties.png" alt="Driver app: a filled-in android/key.properties, next to key.properties.example" /><figcaption>Figure 44: Driver app: a filled-in android/key.properties, next to key.properties.example</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/android-key-properties.png" alt="Rider app: a filled-in android/key.properties, next to key.properties.example" /><figcaption>Figure 58: Rider app: a filled-in android/key.properties, next to key.properties.example</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/android-key-properties.png" alt="Driver app: a filled-in android/key.properties, next to key.properties.example" /><figcaption>Figure 59: Driver app: a filled-in android/key.properties, next to key.properties.example</figcaption></figure>
 <p>Check that Gradle reads it. In the app's <code>android</code> folder, run:</p>
 <pre><code class="language-bash">./gradlew signingReport
 </code></pre>
@@ -2712,8 +2712,8 @@ keyPassword=YOUR_KEYSTORE_PASSWORD
 <li><code>Config: debug</code> means Gradle didn't find <code>key.properties</code>.</li>
 <li>An <code>Error:</code> line, such as <code>keystore password was incorrect</code>, means a wrong password or path. The report still ends with <code>BUILD SUCCESSFUL</code>, so read the <code>release</code> block.</li>
 </ul>
-<figure><img src="assets/figures/mobile/rider/android-signing-report.png" alt="Rider app: the signing report shows the release variant signed with your upload key" /><figcaption>Figure 45: Rider app: the signing report shows the release variant signed with your upload key</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/android-signing-report.png" alt="Driver app: the signing report shows the release variant signed with your upload key" /><figcaption>Figure 46: Driver app: the signing report shows the release variant signed with your upload key</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/android-signing-report.png" alt="Rider app: the signing report shows the release variant signed with your upload key" /><figcaption>Figure 60: Rider app: the signing report shows the release variant signed with your upload key</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/android-signing-report.png" alt="Driver app: the signing report shows the release variant signed with your upload key" /><figcaption>Figure 61: Driver app: the signing report shows the release variant signed with your upload key</figcaption></figure>
 <h4 id="mobile-setup-136-gradle-signing">13.6 Gradle signing</h4>
 <p>Nothing to edit: <code>android/app/build.gradle.kts</code> already reads <code>key.properties</code> and signs release builds with it.</p>
 <pre><code class="language-kotlin">val keystore = rootProperties(&quot;key.properties&quot;)
@@ -2760,8 +2760,8 @@ Running Gradle task 'assembleRelease'...                          101.9s
 </tr>
 </tbody>
 </table>
-<figure><img src="assets/figures/mobile/rider/android-release-files.png" alt="Rider app: the release builds are written to build/app/outputs/bundle/release/ and build/app/outputs/flutter-apk/" /><figcaption>Figure 47: Rider app: the release builds are written to build/app/outputs/bundle/release/ and build/app/outputs/flutter-apk/</figcaption></figure>
-<figure><img src="assets/figures/mobile/driver/android-release-files.png" alt="Driver app: the release builds are written to build/app/outputs/bundle/release/ and build/app/outputs/flutter-apk/" /><figcaption>Figure 48: Driver app: the release builds are written to build/app/outputs/bundle/release/ and build/app/outputs/flutter-apk/</figcaption></figure>
+<figure><img src="assets/figures/mobile/rider/android-release-files.png" alt="Rider app: the release builds are written to build/app/outputs/bundle/release/ and build/app/outputs/flutter-apk/" /><figcaption>Figure 62: Rider app: the release builds are written to build/app/outputs/bundle/release/ and build/app/outputs/flutter-apk/</figcaption></figure>
+<figure><img src="assets/figures/mobile/driver/android-release-files.png" alt="Driver app: the release builds are written to build/app/outputs/bundle/release/ and build/app/outputs/flutter-apk/" /><figcaption>Figure 63: Driver app: the release builds are written to build/app/outputs/bundle/release/ and build/app/outputs/flutter-apk/</figcaption></figure>
 <p>The APK contains every processor type. For smaller files, build one APK per type with <code>flutter build apk --release --split-per-abi --dart-define=API_BASE_URL=https://your-domain.com</code>.</p>
 <p>Optional extras for release builds:</p>
 <ul>
@@ -2850,7 +2850,6 @@ flutter build ipa --release --dart-define=API_BASE_URL=https://your-domain.com
 <p>When the build has been processed in App Store Connect, test it with <strong>TestFlight</strong>, then add it to an App Store version and submit it for review.</p>
 </li>
 </ol>
-
 <p>App Store Connect asks about encryption for each build. RideX only uses standard HTTPS.</p>
 <h4 id="mobile-setup-147-app-review-notes">14.7 App Review notes</h4>
 <ul>
