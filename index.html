@@ -438,9 +438,9 @@
 </ol>
 <h3 id="introduction-requirements">Requirements</h3>
 <ul>
-<li><strong>Server:</strong> PHP 8.4.1+, MySQL 8+ or MariaDB 10.4+, a cron job and a queue worker.</li>
-<li><strong>Apps:</strong> Flutter 3.44+, with Android Studio for Android and Xcode for iOS (<a href="#mobile-setup-2-requirements">details</a>).</li>
-<li><strong>Accounts:</strong> Google Cloud (Maps), Firebase, Twilio, and a payment gateway for card or online payments (cash and wallet payments need no gateway). To publish the apps: Google Play Console and a paid Apple Developer account, which Firebase App Check also uses for Play Integrity and App Attest.</li>
+<li><strong>Server:</strong> PHP 8.4.1+, MySQL 8+ or MariaDB 10.4+, a cron job and a queue worker. Node.js 20.19+ or 22.12+ only if you change the admin panel's styles: the package includes the built files.</li>
+<li><strong>Apps:</strong> Flutter 3.44+ (Dart 3.12+), with Android Studio for Android and Xcode for iOS. They run on Android 7.0 (API 24) or newer, built for API 36, and on iOS 15.0 or newer (<a href="#mobile-setup-2-requirements">details</a>).</li>
+<li><strong>Accounts:</strong> Google Cloud (Maps), Twilio for sign-in codes (or Firebase Phone Auth), and a payment gateway for card or online payments (cash and wallet payments need no gateway). Firebase is optional: it adds push notifications and instant ride updates. To publish the apps: Google Play Console and a paid Apple Developer account, which Firebase App Check also uses for Play Integrity and App Attest.</li>
 </ul>
 
             </section>
@@ -1259,12 +1259,24 @@ php artisan up
 <td>The web or CLI PHP is older than 8.4.1. Switch both to 8.4+.</td>
 </tr>
 <tr>
-<td>HTTP 500 right after install</td>
+<td>HTTP 500 right after install, or &quot;…/storage/logs/laravel.log could not be opened … Permission denied&quot;</td>
 <td>Run <code>php artisan key:generate</code>, check the <code>DB_*</code> values and make <code>storage/</code> and <code>bootstrap/cache/</code> writable.</td>
 </tr>
 <tr>
-<td>Admin panel has no styling</td>
-<td>The document root isn't <code>public/</code>, or <code>public/build</code> is missing. Point the root at <code>public/</code>, or run <code>npm install &amp;&amp; npm run build</code>.</td>
+<td>&quot;SQLSTATE[HY000] [2002] Connection refused&quot; or &quot;[1045] Access denied for user&quot;</td>
+<td>The <code>DB_*</code> values in <code>.env</code> don't match your database. Check <code>DB_HOST</code> (on shared hosting usually <code>localhost</code>), <code>DB_PORT</code>, <code>DB_DATABASE</code>, <code>DB_USERNAME</code> and <code>DB_PASSWORD</code>, then run <code>php artisan optimize</code>.</td>
+</tr>
+<tr>
+<td>&quot;…/vendor/autoload.php: Failed to open stream&quot; or <code>Class &quot;…&quot; not found</code></td>
+<td>Some files didn't upload. Upload <code>vendor/</code> again (the package includes it), or run <code>composer install --no-dev --optimize-autoloader</code>.</td>
+</tr>
+<tr>
+<td>Admin panel has no styling, or &quot;Vite manifest not found&quot;</td>
+<td>The document root isn't <code>public/</code>, or <code>public/build</code> is missing. Point the root at <code>public/</code>, upload the package's <code>public/build</code> folder, or run <code>npm install &amp;&amp; npm run build</code>.</td>
+</tr>
+<tr>
+<td>&quot;419 Page Expired&quot; when you sign in to the admin panel</td>
+<td>The browser didn't keep the session cookie. With <code>SESSION_SECURE_COOKIE=true</code> the site must open over <code>https://</code>, and <code>APP_URL</code> and <code>SESSION_DOMAIN</code> (or <code>null</code>) must match the address you open. Run <code>php artisan optimize</code>, then reload the sign-in page.</td>
 </tr>
 <tr>
 <td>Uploaded photos or documents return 404</td>
@@ -2889,6 +2901,8 @@ flutter build ipa --release --dart-define=API_BASE_URL=https://your-domain.com
 <ul>
 <li><strong>The Dart SDK is too old</strong> (&quot;Because ridex_rider requires SDK version ^3.12.2, version solving failed&quot;): install Flutter 3.44 or newer (3.1, 3.2).</li>
 <li><strong>&quot;N packages have newer versions incompatible with dependency constraints&quot;</strong> isn't an error: <code>pubspec.lock</code> keeps the tested versions.</li>
+<li><strong><code>vendor/ridex_core</code> is missing</strong> (<code>could not find package ridex_core at &quot;vendor/ridex_core&quot;</code>): keep that folder inside the app folder, where <code>pubspec.yaml</code> points.</li>
+<li><strong>The editor can't find a package</strong> (<code>Target of URI doesn't exist: 'package:…'</code>): run <code>flutter pub get</code> in the app's folder, the one with <code>pubspec.yaml</code>.</li>
 </ul>
 <h4 id="mobile-setup-153-android-build">15.3 Android build</h4>
 <table>
@@ -2910,6 +2924,14 @@ flutter build ipa --release --dart-define=API_BASE_URL=https://your-domain.com
 <tr>
 <td><code>flutter.sdk not set in local.properties</code></td>
 <td>Run <code>flutter pub get</code> in the app folder; it writes <code>android/local.properties</code>.</td>
+</tr>
+<tr>
+<td><code>Failed to install the following Android SDK packages as some licences have not been accepted</code></td>
+<td>Run <code>flutter doctor --android-licenses</code>, answer <code>y</code> to each licence, and build again (5.3).</td>
+</tr>
+<tr>
+<td><code>Could not resolve all files for configuration …</code> or <code>Could not GET 'https://…'</code></td>
+<td>Gradle couldn't download a dependency. Check the internet connection, VPN or proxy, then build again.</td>
 </tr>
 <tr>
 <td>A Java version error from Gradle</td>
@@ -2946,6 +2968,14 @@ flutter build ipa --release --dart-define=API_BASE_URL=https://your-domain.com
 <tr>
 <td><code>Generated.xcconfig must exist. If you're running pod install manually, make sure flutter pub get is executed first</code></td>
 <td>Run <code>flutter pub get</code>, then <code>pod install</code> again.</td>
+</tr>
+<tr>
+<td><code>The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.</code></td>
+<td>Run <code>flutter pub get</code>, then <code>pod install</code> in <code>ios/</code>, and build again.</td>
+</tr>
+<tr>
+<td><code>No such module 'Flutter'</code> or <code>Module '…' not found</code> in Xcode</td>
+<td>Xcode opened <code>Runner.xcodeproj</code>. Open <code>ios/Runner.xcworkspace</code> instead (7.4), after <code>flutter pub get</code> and <code>pod install</code>.</td>
 </tr>
 <tr>
 <td>CocoaPods can't find a pod version</td>
@@ -7816,15 +7846,15 @@ flutter pub get
 <td><a href="#mobile-setup-151-flutter-doctor">Mobile app setup → 15.1 flutter doctor</a></td>
 </tr>
 <tr>
-<td><code>flutter pub get</code> fails</td>
+<td><code>flutter pub get</code> fails, or the editor can't find a package</td>
 <td><a href="#mobile-setup-152-flutter-pub-get">15.2 flutter pub get</a></td>
 </tr>
 <tr>
-<td>An Android build fails: a Firebase file, Java, Gradle or memory</td>
+<td>An Android build fails: SDK licences, downloads, a Firebase file, Java, Gradle or memory</td>
 <td><a href="#mobile-setup-153-android-build">15.3 Android build</a></td>
 </tr>
 <tr>
-<td>An iOS build fails: a Firebase file, CocoaPods or Xcode</td>
+<td>An iOS build fails: CocoaPods, a missing module, a Firebase file or Xcode</td>
 <td><a href="#mobile-setup-154-ios-build-and-cocoapods">15.4 iOS build and CocoaPods</a></td>
 </tr>
 <tr>
