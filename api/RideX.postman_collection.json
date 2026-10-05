@@ -55,7 +55,7 @@
                                 "config"
                             ]
                         },
-                        "description": "",
+                        "description": "No sign-in needed: branding, currency, languages, phone country, active vehicle types, code lengths and every public setting.",
                         "auth": {
                             "type": "noauth"
                         }
@@ -127,7 +127,7 @@
                                 }
                             ]
                         },
-                        "description": "",
+                        "description": "One active information page by its slug, with the title and content translated; 404 when it is missing or switched off.",
                         "auth": {
                             "type": "noauth"
                         }
@@ -157,7 +157,7 @@
                                 "faqs"
                             ]
                         },
-                        "description": "",
+                        "description": "Active help-centre questions for the app, in sort order, each with its category and the translated question and answer.",
                         "auth": {
                             "type": "noauth"
                         }
@@ -234,7 +234,7 @@
                                 "cancellation-reasons"
                             ]
                         },
-                        "description": "",
+                        "description": "The reasons the app offers when cancelling a ride, translated and in sort order.",
                         "auth": {
                             "type": "noauth"
                         }
@@ -294,7 +294,7 @@
                                 "quick-messages"
                             ]
                         },
-                        "description": "",
+                        "description": "One-tap replies the app offers in the trip chat, translated and in sort order.",
                         "auth": {
                             "type": "noauth"
                         }
@@ -366,7 +366,7 @@
                                 }
                             ]
                         },
-                        "description": "",
+                        "description": "No sign-in, secret token: status, pickup, drop, first names, the driver's live position and the car; 410 once the ride has ended.",
                         "auth": {
                             "type": "noauth"
                         }
@@ -402,7 +402,7 @@
                                 "send"
                             ]
                         },
-                        "description": "- `country_code` **required** · string, regex:/^\\+\\d{1,4}$/\n- `phone` **required** · string, regex:/^\\d{5,14}$/\n- `purpose` · in:\"login\",\"change_phone\"",
+                        "description": "Texts a sign-in or phone-change code and returns its lifetime; refused when sign-in runs on Firebase Phone Auth instead.\n\n- `country_code` **required** · string, regex:/^\\+\\d{1,4}$/\n- `phone` **required** · string, regex:/^\\d{5,14}$/\n- `purpose` · in:\"login\",\"change_phone\"",
                         "auth": {
                             "type": "noauth"
                         },
@@ -442,7 +442,7 @@
                                 "verify"
                             ]
                         },
-                        "description": "- `country_code` **required** · string, regex:/^\\+\\d{1,4}$/\n- `phone` **required** · string, regex:/^\\d{5,14}$/\n- `user_type` **required** · in:\"rider\",\"driver\"\n- `referral_code` · string, max:20, exists:users,referral_code,user_type,\"NULL\",deleted_at,\"NULL\"\n- `fcm_token` · string, max:255\n- `device_type` · in:\"android\",\"ios\"\n- `device_name` · string, max:100\n- `app_version` · string, max:20\n- `code` **required** · string, regex:/^\\d{4,8}$/",
+                        "description": "Checks the texted code, then signs in or creates the account; wrong, expired or over-tried codes and blocked accounts are refused.\n\n- `country_code` **required** · string, regex:/^\\+\\d{1,4}$/\n- `phone` **required** · string, regex:/^\\d{5,14}$/\n- `user_type` **required** · in:\"rider\",\"driver\"\n- `referral_code` · string, max:20, exists:users,referral_code,user_type,\"NULL\",deleted_at,\"NULL\"\n- `fcm_token` · string, max:255\n- `device_type` · in:\"android\",\"ios\"\n- `device_name` · string, max:100\n- `app_version` · string, max:20\n- `code` **required** · string, regex:/^\\d{4,8}$/",
                         "auth": {
                             "type": "noauth"
                         },
@@ -481,7 +481,7 @@
                                 "firebase"
                             ]
                         },
-                        "description": "- `country_code` **required** · string, regex:/^\\+\\d{1,4}$/\n- `phone` **required** · string, regex:/^\\d{5,14}$/\n- `user_type` **required** · in:\"rider\",\"driver\"\n- `referral_code` · string, max:20, exists:users,referral_code,user_type,\"NULL\",deleted_at,\"NULL\"\n- `fcm_token` · string, max:255\n- `device_type` · in:\"android\",\"ios\"\n- `device_name` · string, max:100\n- `app_version` · string, max:20\n- `id_token` **required** · string, max:4096",
+                        "description": "Signs in or signs up with a Firebase Phone Auth ID token; refuses a phone number that differs from the one Firebase verified.\n\n- `country_code` **required** · string, regex:/^\\+\\d{1,4}$/\n- `phone` **required** · string, regex:/^\\d{5,14}$/\n- `user_type` **required** · in:\"rider\",\"driver\"\n- `referral_code` · string, max:20, exists:users,referral_code,user_type,\"NULL\",deleted_at,\"NULL\"\n- `fcm_token` · string, max:255\n- `device_type` · in:\"android\",\"ios\"\n- `device_name` · string, max:100\n- `app_version` · string, max:20\n- `id_token` **required** · string, max:4096",
                         "auth": {
                             "type": "noauth"
                         },
@@ -520,7 +520,7 @@
                                 "social"
                             ]
                         },
-                        "description": "- `user_type` **required** · in:\"rider\",\"driver\"\n- `referral_code` · string, max:20, exists:users,referral_code,user_type,\"NULL\",deleted_at,\"NULL\"\n- `fcm_token` · string, max:255\n- `device_type` · in:\"android\",\"ios\"\n- `device_name` · string, max:100\n- `app_version` · string, max:20\n- `provider` **required** · in:\"google\",\"apple\"\n- `id_token` **required** · string, max:4096\n- `name` · string, max:100",
+                        "description": "Google or Apple sign-in: verifies the ID token, then signs in, links by email or creates the account; 403 when that provider is off.\n\n- `user_type` **required** · in:\"rider\",\"driver\"\n- `referral_code` · string, max:20, exists:users,referral_code,user_type,\"NULL\",deleted_at,\"NULL\"\n- `fcm_token` · string, max:255\n- `device_type` · in:\"android\",\"ios\"\n- `device_name` · string, max:100\n- `app_version` · string, max:20\n- `provider` **required** · in:\"google\",\"apple\"\n- `id_token` **required** · string, max:4096\n- `name` · string, max:100",
                         "auth": {
                             "type": "noauth"
                         },
@@ -559,7 +559,7 @@
                                 "me"
                             ]
                         },
-                        "description": ""
+                        "description": "The signed-in user; for drivers, also the driver profile with its current vehicle and vehicle type."
                     }
                 },
                 {
@@ -586,7 +586,7 @@
                                 "logout"
                             ]
                         },
-                        "description": ""
+                        "description": "Revokes this device's token and clears its push token; drivers also go offline so dispatch skips them."
                     }
                 },
                 {
@@ -613,7 +613,7 @@
                                 "fcm-token"
                             ]
                         },
-                        "description": "- `fcm_token` **required** · string, max:255\n- `device_type` · in:\"android\",\"ios\"\n- `app_version` · string, max:20",
+                        "description": "Saves the phone's FCM push token, with the device type and app version when sent.\n\n- `fcm_token` **required** · string, max:255\n- `device_type` · in:\"android\",\"ios\"\n- `app_version` · string, max:20",
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"fcm_token\": \"\",\n    \"device_type\": \"android\",\n    \"app_version\": \"\"\n}",
@@ -649,7 +649,7 @@
                                 "account"
                             ]
                         },
-                        "description": ""
+                        "description": "Deletes the account as app stores require: personal data is wiped, rides and payments are kept; refused during an active ride."
                     }
                 }
             ]
@@ -680,7 +680,7 @@
                                 "profile"
                             ]
                         },
-                        "description": ""
+                        "description": "The signed-in user's profile, with the driver profile for drivers."
                     }
                 },
                 {
@@ -800,7 +800,7 @@
                                 "language"
                             ]
                         },
-                        "description": "- `language` **required** · string, exists:languages,code,is_active,\"1\"",
+                        "description": "Saves the user's language (an active language code); notifications sent to them then use it.\n\n- `language` **required** · string, exists:languages,code,is_active,\"1\"",
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"language\": \"\"\n}",
@@ -836,7 +836,7 @@
                                 "notification-preferences"
                             ]
                         },
-                        "description": "- `preferences` **required** · array\n- `preferences.ride_updates` · boolean\n- `preferences.chat` · boolean\n- `preferences.payments` · boolean\n- `preferences.promotions` · boolean\n- `preferences.news` · boolean\n- `preferences.sms` · boolean\n- `preferences.email` · boolean",
+                        "description": "Switches notification types and channels on or off; keys not sent keep their value, and safety alerts always go out.\n\n- `preferences` **required** · array\n- `preferences.ride_updates` · boolean\n- `preferences.chat` · boolean\n- `preferences.payments` · boolean\n- `preferences.promotions` · boolean\n- `preferences.news` · boolean\n- `preferences.sms` · boolean\n- `preferences.email` · boolean",
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"preferences\": {\n        \"ride_updates\": true,\n        \"chat\": true,\n        \"payments\": true,\n        \"promotions\": true,\n        \"news\": true,\n        \"sms\": true,\n        \"email\": true\n    }\n}",
@@ -876,7 +876,7 @@
                                 "wallet"
                             ]
                         },
-                        "description": ""
+                        "description": "The balance, any dues owed (the negative part), the currency and the top-up limits."
                     }
                 },
                 {
@@ -903,7 +903,7 @@
                                 "transactions"
                             ]
                         },
-                        "description": ""
+                        "description": "The user's wallet ledger, newest first and paginated, each entry with the record behind it."
                     }
                 }
             ]
@@ -934,7 +934,7 @@
                                 "referrals"
                             ]
                         },
-                        "description": ""
+                        "description": "The user's invite code, the reward amounts, the total earned and everyone they invited with each reward's status."
                     }
                 }
             ]
@@ -994,7 +994,7 @@
                                 "top-up"
                             ]
                         },
-                        "description": "- `amount` **required** · numeric, min:0.01, max:99999999\n- `gateway` **required** · string, max:30",
+                        "description": "Opens a wallet top-up checkout on the chosen gateway; refused when the wallet is off, below the minimum or past the balance cap.\n\n- `amount` **required** · numeric, min:0.01, max:99999999\n- `gateway` **required** · string, max:30",
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"amount\": 1,\n    \"gateway\": \"\"\n}",
@@ -1037,7 +1037,7 @@
                                 }
                             ]
                         },
-                        "description": ""
+                        "description": "Asks the gateway how the user's own payment went once the hosted page closes; when paid, the money moves exactly once."
                     }
                 },
                 {
@@ -1064,7 +1064,7 @@
                                 "history"
                             ]
                         },
-                        "description": ""
+                        "description": "The user's payments, newest first and paginated, each with its ride."
                     }
                 }
             ]
@@ -1095,7 +1095,7 @@
                                 "notifications"
                             ]
                         },
-                        "description": ""
+                        "description": "The user's notifications, newest first and paginated, with the unread count in meta."
                     }
                 },
                 {
@@ -1149,7 +1149,7 @@
                                 "read-all"
                             ]
                         },
-                        "description": ""
+                        "description": "Marks every unread notification as read; the unread count comes back as 0."
                     }
                 },
                 {
@@ -1183,7 +1183,7 @@
                                 }
                             ]
                         },
-                        "description": ""
+                        "description": "Marks one of the user's own notifications as read and returns the new unread count; 404 for any other id."
                     }
                 }
             ]
@@ -1229,7 +1229,7 @@
                                 }
                             ]
                         },
-                        "description": "- `after_id` · integer, min:1"
+                        "description": "Messages on this ride, oldest first; with after_id only newer ones. Only the ride's rider and driver may read them.\n\n- `after_id` · integer, min:1"
                     }
                 },
                 {
@@ -1263,7 +1263,7 @@
                                 }
                             ]
                         },
-                        "description": "- `message` **required** · string, custom\n- `type` · in:\"text\",\"quick_reply\"",
+                        "description": "Sends a text or quick reply and pushes it to the other person; refused when chat is off, before a driver accepts or after the trip.\n\n- `message` **required** · string, custom\n- `type` · in:\"text\",\"quick_reply\"",
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"message\": \"\",\n    \"type\": \"text\"\n}",
@@ -1307,7 +1307,7 @@
                                 }
                             ]
                         },
-                        "description": ""
+                        "description": "Marks the messages sent to the signed-in user on this ride as read; only the ride's rider and driver may call it."
                     }
                 }
             ]
@@ -1339,7 +1339,7 @@
                                 "token"
                             ]
                         },
-                        "description": ""
+                        "description": "A Firebase custom token, the database URL and the paths this user may listen to; 503 when Firebase is not set up, so the app polls."
                     }
                 }
             ]
@@ -1370,7 +1370,7 @@
                                 "sos"
                             ]
                         },
-                        "description": "- `ride_uuid` · uuid\n- `lat` · required_with:lng, numeric, between:-90,90\n- `lng` · required_with:lat, numeric, between:-180,180",
+                        "description": "Raises an SOS on the given or current ride and texts the emergency contacts; pressing again soon after updates the open alert.\n\n- `ride_uuid` · uuid\n- `lat` · required_with:lng, numeric, between:-90,90\n- `lng` · required_with:lat, numeric, between:-180,180",
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"ride_uuid\": \"00000000-0000-0000-0000-000000000000\",\n    \"lat\": 40.758,\n    \"lng\": -73.9855\n}",
@@ -1410,7 +1410,7 @@
                                 "support-tickets"
                             ]
                         },
-                        "description": ""
+                        "description": "The user's tickets, most recently updated first and paginated, each with its ride."
                     }
                 },
                 {
@@ -1436,7 +1436,7 @@
                                 "support-tickets"
                             ]
                         },
-                        "description": "- `category` **required** · in:\"general\",\"ride_issue\",\"fare_dispute\",\"payment\",\"safety\",\"driver_behavior\",\"lost_item\",\"account\",\"other\"\n- `subject` **required** · string, max:150\n- `description` **required** · string, max:2000\n- `ride_uuid` · , uuid\n- `disputed_amount` · numeric, gt:0, max:1000000",
+                        "description": "Opens a ticket at its category's default priority; a fare dispute must name one of the user's own rides.\n\n- `category` **required** · in:\"general\",\"ride_issue\",\"fare_dispute\",\"payment\",\"safety\",\"driver_behavior\",\"lost_item\",\"account\",\"other\"\n- `subject` **required** · string, max:150\n- `description` **required** · string, max:2000\n- `ride_uuid` · , uuid\n- `disputed_amount` · numeric, gt:0, max:1000000",
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"category\": \"general\",\n    \"subject\": \"\",\n    \"description\": \"\",\n    \"ride_uuid\": \"00000000-0000-0000-0000-000000000000\",\n    \"disputed_amount\": 1\n}",
@@ -1478,7 +1478,7 @@
                                 }
                             ]
                         },
-                        "description": ""
+                        "description": "One of the user's own tickets with its ride and replies; 404 for anyone else's."
                     }
                 },
                 {
@@ -1512,7 +1512,7 @@
                                 }
                             ]
                         },
-                        "description": "- `message` **required** · string, custom",
+                        "description": "Adds the user's reply to their own ticket (404 otherwise) and puts it back in the support queue; closed tickets are refused.\n\n- `message` **required** · string, custom",
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"message\": \"\"\n}",
@@ -1568,7 +1568,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `lat` · numeric, between:-90,90\n- `lng` · numeric, between:-180,180"
+                                "description": "The rider home screen in one call: the active ride, saved places, live banners and the zone at ?lat&lng.\n\n- `lat` · numeric, between:-90,90\n- `lng` · numeric, between:-180,180"
                             }
                         }
                     ]
@@ -1672,7 +1672,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `q` **required** · string, min:2, max:200\n- `lat` · numeric, between:-90,90, required_with:lng\n- `lng` · numeric, between:-180,180, required_with:lat\n- `session_token` · string, regex:/^[A-Za-z0-9_-]{1,36}$/"
+                                "description": "Google Places suggestions for the typed text (2+ characters), biased towards ?lat&lng; an empty list when Google is not set up or fails.\n\n- `q` **required** · string, min:2, max:200\n- `lat` · numeric, between:-90,90, required_with:lng\n- `lng` · numeric, between:-180,180, required_with:lat\n- `session_token` · string, regex:/^[A-Za-z0-9_-]{1,36}$/"
                             }
                         },
                         {
@@ -1712,7 +1712,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180"
+                                "description": "The readable address at a GPS point (e.g. for \"Current location\"); the coordinates themselves when Google gives none.\n\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180"
                             }
                         },
                         {
@@ -1753,7 +1753,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `session_token` · string, regex:/^[A-Za-z0-9_-]{1,36}$/"
+                                "description": "A suggestion's name, address and coordinates in the request language, cached; 404 when Google returns no such place.\n\n- `session_token` · string, regex:/^[A-Za-z0-9_-]{1,36}$/"
                             }
                         }
                     ]
@@ -1785,7 +1785,7 @@
                                         "fare-estimate"
                                     ]
                                 },
-                                "description": "- `ride_type` **required** · in:\"instant\",\"scheduled\",\"rental\",\"outstation\"\n- `pickup` **required** · array\n- `pickup.lat` **required** · numeric, between:-90,90\n- `pickup.lng` **required** · numeric, between:-180,180\n- `drop` **required** · array\n- `drop.lat` **required** · numeric, between:-90,90\n- `drop.lng` **required** · numeric, between:-180,180\n- `stops` · array, max:3\n- `stops.*.lat` **required** · numeric, between:-90,90\n- `stops.*.lng` **required** · numeric, between:-180,180\n- `scheduled_at` · date, after_or_equal:29 minutes from now, before_or_equal:1 week from now\n- `rental_hours` · integer, min:1, max:24\n- `is_round_trip` · boolean\n- `outstation_days` · integer, min:1, max:30\n- `vehicle_type_id` · integer, exists:vehicle_types,id,is_active,\"1\",deleted_at,\"NULL\"\n- `promo_code` · string, max:30",
+                                "description": "One priced option per vehicle type offered at the pickup, each with a quote_id for booking; 422 when no type serves the trip there.\n\n- `ride_type` **required** · in:\"instant\",\"scheduled\",\"rental\",\"outstation\"\n- `pickup` **required** · array\n- `pickup.lat` **required** · numeric, between:-90,90\n- `pickup.lng` **required** · numeric, between:-180,180\n- `drop` **required** · array\n- `drop.lat` **required** · numeric, between:-90,90\n- `drop.lng` **required** · numeric, between:-180,180\n- `stops` · array, max:3\n- `stops.*.lat` **required** · numeric, between:-90,90\n- `stops.*.lng` **required** · numeric, between:-180,180\n- `scheduled_at` · date, after_or_equal:29 minutes from now, before_or_equal:1 week from now\n- `rental_hours` · integer, min:1, max:24\n- `is_round_trip` · boolean\n- `outstation_days` · integer, min:1, max:30\n- `vehicle_type_id` · integer, exists:vehicle_types,id,is_active,\"1\",deleted_at,\"NULL\"\n- `promo_code` · string, max:30",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"ride_type\": \"instant\",\n    \"pickup\": {\n        \"lat\": 40.758,\n        \"lng\": -73.9855\n    },\n    \"drop\": {\n        \"lat\": 40.758,\n        \"lng\": -73.9855\n    },\n    \"stops\": [\n        {\n            \"lat\": 40.758,\n            \"lng\": -73.9855\n        }\n    ],\n    \"scheduled_at\": \"2030-01-01\",\n    \"rental_hours\": 1,\n    \"is_round_trip\": true,\n    \"outstation_days\": 1,\n    \"vehicle_type_id\": 1,\n    \"promo_code\": \"\"\n}",
@@ -1838,7 +1838,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180"
+                                "description": "The rental package hours any active vehicle type offers at the pickup, from each type's fare plan, unique and sorted.\n\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180"
                             }
                         }
                     ]
@@ -1871,7 +1871,7 @@
                                         "validate"
                                     ]
                                 },
-                                "description": "- `code` **required** · string, max:30",
+                                "description": "Checks a code for this rider and the pickup at ?lat&lng; 422 with the reason when it is invalid, expired, used up or not usable.\n\n- `code` **required** · string, max:30",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"code\": \"123456\"\n}",
@@ -1907,7 +1907,7 @@
                                         "promo-codes"
                                     ]
                                 },
-                                "description": ""
+                                "description": "Valid codes this rider can still use, newest first; codes limited to areas only show when ?lat&lng is inside one of them."
                             }
                         }
                     ]
@@ -1939,7 +1939,7 @@
                                         "rides"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The rider's rides, newest first and paginated; ?status takes a comma-separated list of statuses."
                             }
                         },
                         {
@@ -1966,7 +1966,7 @@
                                         "rides"
                                     ]
                                 },
-                                "description": "- `quote_id` **required** · uuid\n- `payment_method` **required** · in:\"cash\",\"card\",\"wallet\",\"online\"\n- `pickup_address` **required** · string, max:500\n- `drop_address` · string, max:500\n- `stop_addresses` · array, max:3\n- `stop_addresses.*` · string, max:500\n- `pickup_note` · string, max:500\n- `passenger_name` · string, max:100, required_with:passenger_phone\n- `passenger_phone` · string, max:30, required_with:passenger_name",
+                                "description": "Books at the quoted price and starts dispatch (scheduled rides wait); refused for an expired quote, a ride in progress or unpaid dues.\n\n- `quote_id` **required** · uuid\n- `payment_method` **required** · in:\"cash\",\"card\",\"wallet\",\"online\"\n- `pickup_address` **required** · string, max:500\n- `drop_address` · string, max:500\n- `stop_addresses` · array, max:3\n- `stop_addresses.*` · string, max:500\n- `pickup_note` · string, max:500\n- `passenger_name` · string, max:100, required_with:passenger_phone\n- `passenger_phone` · string, max:30, required_with:passenger_name",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"quote_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"payment_method\": \"cash\",\n    \"pickup_address\": \"\",\n    \"drop_address\": \"\",\n    \"stop_addresses\": [\n        \"\"\n    ],\n    \"pickup_note\": \"\",\n    \"passenger_name\": \"\",\n    \"passenger_phone\": \"\"\n}",
@@ -2003,7 +2003,7 @@
                                         "active"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The rider's ride in progress with its driver, vehicle, stops and unread chat count, or null when there is none."
                             }
                         },
                         {
@@ -2037,7 +2037,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "One of the rider's own rides with its driver, vehicle, stops and unread chat count; 404 for anyone else's."
                             }
                         },
                         {
@@ -2072,7 +2072,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `reason` · string, max:500",
+                                "description": "Cancels the rider's own ride; free before a driver is assigned and for a grace period after, then a fee applies. Refused once started.\n\n- `reason` · string, max:500",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"reason\": \"\"\n}",
@@ -2195,7 +2195,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `payment_method` **required** · in:\"cash\",\"card\",\"wallet\",\"online\"",
+                                "description": "Switches the payment method before the ride ends; once an unpaid card or online ride has ended, only the wallet can settle it.\n\n- `payment_method` **required** · in:\"cash\",\"card\",\"wallet\",\"online\"",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"payment_method\": \"cash\"\n}",
@@ -2239,7 +2239,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "The receipt of the rider's own completed ride, or of a cancelled one charged a fee, with its payments; 404 otherwise."
                             }
                         },
                         {
@@ -2274,7 +2274,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `rating` **required** · integer, custom\n- `review` · string, custom\n- `tags` · array\n- `tags.*` · string, distinct, in",
+                                "description": "Rates the other person on a completed ride the user was on (404 otherwise) and updates their average; one rating each per ride.\n\n- `rating` **required** · integer, custom\n- `review` · string, custom\n- `tags` · array\n- `tags.*` · string, distinct, in",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"rating\": 1,\n    \"review\": \"\",\n    \"tags\": [\n        \"\"\n    ]\n}",
@@ -2318,7 +2318,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `item_name` **required** · string, max:100\n- `description` · string, max:1000\n- `contact_phone` · string, max:20, regex:/^\\+?[\\d\\s-]{5,20}$/",
+                                "description": "Reports an item left on the rider's own completed ride and tells the driver; refused before completion or after the reporting window.\n\n- `item_name` **required** · string, max:100\n- `description` · string, max:1000\n- `contact_phone` · string, max:20, regex:/^\\+?[\\d\\s-]{5,20}$/",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"item_name\": \"\",\n    \"description\": \"\",\n    \"contact_phone\": \"\"\n}",
@@ -2359,7 +2359,7 @@
                                         "lost-items"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The rider's lost-item reports, newest first and paginated, each with its ride."
                             }
                         }
                     ]
@@ -2391,7 +2391,7 @@
                                         "saved-places"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The rider's saved places, sorted by label and newest first within each label."
                             }
                         },
                         {
@@ -2418,7 +2418,7 @@
                                         "saved-places"
                                     ]
                                 },
-                                "description": "- `label` **required** · in, when\n- `name` **required** · string, max:100\n- `address` **required** · string, max:500\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180",
+                                "description": "Saves a place for the rider; there can be only one home and one work place.\n\n- `label` **required** · in, when\n- `name` **required** · string, max:100\n- `address` **required** · string, max:500\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"label\": \"\",\n    \"name\": \"\",\n    \"address\": \"\",\n    \"lat\": 40.758,\n    \"lng\": -73.9855\n}",
@@ -2461,7 +2461,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `label` **required** · in, when\n- `name` **required** · string, max:100\n- `address` **required** · string, max:500\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180",
+                                "description": "Edits one of the rider's own places (still one home and one work at most); 404 for anyone else's.\n\n- `label` **required** · in, when\n- `name` **required** · string, max:100\n- `address` **required** · string, max:500\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"label\": \"\",\n    \"name\": \"\",\n    \"address\": \"\",\n    \"lat\": 40.758,\n    \"lng\": -73.9855\n}",
@@ -2504,7 +2504,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Removes one of the rider's own places; 404 for anyone else's."
                             }
                         }
                     ]
@@ -2536,7 +2536,7 @@
                                         "emergency-contacts"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The rider's emergency contacts, by name."
                             }
                         },
                         {
@@ -2563,7 +2563,7 @@
                                         "emergency-contacts"
                                     ]
                                 },
-                                "description": ""
+                                "description": "Adds an emergency contact; refused once the rider has the maximum allowed in the safety settings."
                             }
                         },
                         {
@@ -2597,7 +2597,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Edits one of the rider's own contacts; 404 for anyone else's."
                             }
                         },
                         {
@@ -2631,7 +2631,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Removes one of the rider's own contacts; 404 for anyone else's."
                             }
                         }
                     ]
@@ -2672,7 +2672,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `gateway` **required** · string, max:30",
+                                "description": "Opens a checkout for the rider's own completed card or online ride (404 for others); refused when nothing is left to pay.\n\n- `gateway` **required** · string, max:30",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"gateway\": \"\"\n}",
@@ -2713,7 +2713,7 @@
                                         "saved-cards"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The rider's cards, default first, after syncing them with Stripe; 422 when saved cards are not available."
                             }
                         },
                         {
@@ -2774,7 +2774,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Removes one of the rider's own cards at Stripe and here; another card becomes the default when needed."
                             }
                         },
                         {
@@ -2809,7 +2809,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Makes one of the rider's own cards the default, the one charged when a card ride ends."
                             }
                         }
                     ]
@@ -2846,7 +2846,7 @@
                                         "onboarding"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The driver's checklist: approval status, rejection reason, can_submit and the profile, documents and vehicle steps."
                             }
                         },
                         {
@@ -2874,7 +2874,7 @@
                                         "profile"
                                     ]
                                 },
-                                "description": "- `name` **required** · custom, string, min:2, max:100\n- `email` · email:rfc, max:150, unique\n- `city_id` **required** · integer, exists\n- `gender` · in\n- `date_of_birth` **required** · custom, date, custom\n- `address` · string, max:255\n- `avatar` · custom, image, custom",
+                                "description": "Step 1: saves the personal details, photo and city and returns the updated checklist; identity fields are locked once verified.\n\n- `name` **required** · custom, string, min:2, max:100\n- `email` · email:rfc, max:150, unique\n- `city_id` **required** · integer, exists\n- `gender` · in\n- `date_of_birth` **required** · custom, date, custom\n- `address` · string, max:255\n- `avatar` · custom, image, custom",
                                 "body": {
                                     "mode": "formdata",
                                     "formdata": [
@@ -2938,7 +2938,7 @@
                                         "submit"
                                     ]
                                 },
-                                "description": ""
+                                "description": "Sends the application to admin review; refused while a step is incomplete, or once it is under review or approved."
                             }
                         }
                     ]
@@ -2998,7 +2998,7 @@
                                         "documents"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The driver's current documents, newest first; ?vehicle_id narrows them to one vehicle."
                             }
                         },
                         {
@@ -3025,7 +3025,7 @@
                                         "documents"
                                     ]
                                 },
-                                "description": "- `document_type` **required** · in:\"profile_photo\",\"national_id\",\"driving_license\",\"vehicle_registration\",\"insurance\",\"fitness_certificate\",\"other\"\n- `vehicle_id` · prohibited\n- `file_front` **required** · file, mimes:jpg,jpeg,png,webp,pdf, max:5120\n- `file_back` · file, mimes:jpg,jpeg,png,webp,pdf, max:5120\n- `document_number` · string, max:100\n- `expires_at` · date, after:today",
+                                "description": "Uploads a document for review; it replaces older copies of that type, except an approved one still in force.\n\n- `document_type` **required** · in:\"profile_photo\",\"national_id\",\"driving_license\",\"vehicle_registration\",\"insurance\",\"fitness_certificate\",\"other\"\n- `vehicle_id` · prohibited\n- `file_front` **required** · file, mimes:jpg,jpeg,png,webp,pdf, max:5120\n- `file_back` · file, mimes:jpg,jpeg,png,webp,pdf, max:5120\n- `document_number` · string, max:100\n- `expires_at` · date, after:today",
                                 "body": {
                                     "mode": "formdata",
                                     "formdata": [
@@ -3090,7 +3090,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "One of the driver's own documents with its review status; 404 for anyone else's."
                             }
                         },
                         {
@@ -3125,7 +3125,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `file_front` **required** · file, mimes:jpg,jpeg,png,webp,pdf, max:5120\n- `file_back` · file, mimes:jpg,jpeg,png,webp,pdf, max:5120\n- `document_number` · string, max:100\n- `expires_at` · date, after:today",
+                                "description": "A new copy of the driver's own document (same type and vehicle) for review, e.g. after a rejection or before it expires.\n\n- `file_front` **required** · file, mimes:jpg,jpeg,png,webp,pdf, max:5120\n- `file_back` · file, mimes:jpg,jpeg,png,webp,pdf, max:5120\n- `document_number` · string, max:100\n- `expires_at` · date, after:today",
                                 "body": {
                                     "mode": "formdata",
                                     "formdata": [
@@ -3179,7 +3179,7 @@
                                         "vehicles"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The driver's vehicles, the active one first and then newest, each with its type and documents."
                             }
                         },
                         {
@@ -3206,7 +3206,7 @@
                                         "vehicles"
                                     ]
                                 },
-                                "description": "- `vehicle_type_id` **required** · integer, exists:vehicle_types,id,is_active,\"1\",deleted_at,\"NULL\"\n- `make` **required** · string, max:50\n- `model` **required** · string, max:50\n- `year` **required** · integer, min:1990, max:2027\n- `color` **required** · string, max:30\n- `plate_number` **required** · string, min:2, max:20, unique:vehicles,plate_number,NULL,id\n- `seats` · integer, min:1, max:20\n- `image` · image, max:5120",
+                                "description": "Adds a vehicle (with an optional photo) awaiting review; the driver's first vehicle becomes the active one.\n\n- `vehicle_type_id` **required** · integer, exists:vehicle_types,id,is_active,\"1\",deleted_at,\"NULL\"\n- `make` **required** · string, max:50\n- `model` **required** · string, max:50\n- `year` **required** · integer, min:1990, max:2027\n- `color` **required** · string, max:30\n- `plate_number` **required** · string, min:2, max:20, unique:vehicles,plate_number,NULL,id\n- `seats` · integer, min:1, max:20\n- `image` · image, max:5120",
                                 "body": {
                                     "mode": "formdata",
                                     "formdata": [
@@ -3280,7 +3280,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "One of the driver's own vehicles with its type and documents; 404 for anyone else's."
                             }
                         },
                         {
@@ -3314,7 +3314,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `vehicle_type_id` **required** · integer, exists:vehicle_types,id,is_active,\"1\",deleted_at,\"NULL\"\n- `make` **required** · string, max:50\n- `model` **required** · string, max:50\n- `year` **required** · integer, min:1990, max:2027\n- `color` **required** · string, max:30\n- `plate_number` **required** · string, min:2, max:20, unique:vehicles,plate_number,NULL,id\n- `seats` · integer, min:1, max:20\n- `image` · image, max:5120",
+                                "description": "Edits the driver's own vehicle; a new type, plate, make, model or year sends an approved one back to review. Refused mid-trip.\n\n- `vehicle_type_id` **required** · integer, exists:vehicle_types,id,is_active,\"1\",deleted_at,\"NULL\"\n- `make` **required** · string, max:50\n- `model` **required** · string, max:50\n- `year` **required** · integer, min:1990, max:2027\n- `color` **required** · string, max:30\n- `plate_number` **required** · string, min:2, max:20, unique:vehicles,plate_number,NULL,id\n- `seats` · integer, min:1, max:20\n- `image` · image, max:5120",
                                 "body": {
                                     "mode": "formdata",
                                     "formdata": [
@@ -3388,7 +3388,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Removes the driver's own vehicle and its documents, promoting another if it was active; refused on a trip or while online in it."
                             }
                         },
                         {
@@ -3423,7 +3423,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Makes this the driver's only active vehicle; once the driver is approved, only an approved vehicle can be chosen. Refused mid-trip."
                             }
                         }
                     ]
@@ -3455,7 +3455,7 @@
                                         "home"
                                     ]
                                 },
-                                "description": ""
+                                "description": "Everything the driver home screen needs: online state, today's totals, rating, wallet, vehicle, active ride, open offer and destination."
                             }
                         }
                     ]
@@ -3487,7 +3487,7 @@
                                         "status"
                                     ]
                                 },
-                                "description": "- `online` **required** · boolean",
+                                "description": "Going online checks the phone, the documents and unpaid dues; going offline is refused during a trip and hands open offers on.\n\n- `online` **required** · boolean",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"online\": true\n}",
@@ -3528,7 +3528,7 @@
                                         "location"
                                     ]
                                 },
-                                "description": "- `is_mock` · boolean\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180\n- `heading` · integer, between:0,359\n- `recorded_at` · date",
+                                "description": "Takes one GPS fix or a buffered batch and returns how many points were kept; jumps are dropped, mock GPS refused when blocking is on.\n\n- `is_mock` · boolean\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180\n- `heading` · integer, between:0,359\n- `recorded_at` · date",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"is_mock\": true,\n    \"lat\": 40.758,\n    \"lng\": -73.9855,\n    \"heading\": 1,\n    \"recorded_at\": \"2030-01-01\"\n}",
@@ -3692,7 +3692,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `q` **required** · string, min:2, max:200\n- `lat` · numeric, between:-90,90, required_with:lng\n- `lng` · numeric, between:-180,180, required_with:lat\n- `session_token` · string, regex:/^[A-Za-z0-9_-]{1,36}$/"
+                                "description": "Google Places suggestions for the typed text (2+ characters), biased towards ?lat&lng; an empty list when Google is not set up or fails.\n\n- `q` **required** · string, min:2, max:200\n- `lat` · numeric, between:-90,90, required_with:lng\n- `lng` · numeric, between:-180,180, required_with:lat\n- `session_token` · string, regex:/^[A-Za-z0-9_-]{1,36}$/"
                             }
                         },
                         {
@@ -3732,7 +3732,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180"
+                                "description": "The readable address at a GPS point (e.g. for \"Current location\"); the coordinates themselves when Google gives none.\n\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180"
                             }
                         },
                         {
@@ -3773,7 +3773,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `session_token` · string, regex:/^[A-Za-z0-9_-]{1,36}$/"
+                                "description": "A suggestion's name, address and coordinates in the request language, cached; 404 when Google returns no such place.\n\n- `session_token` · string, regex:/^[A-Za-z0-9_-]{1,36}$/"
                             }
                         }
                     ]
@@ -3806,7 +3806,7 @@
                                         "current"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The driver's newest offer still inside its countdown, with the ride and rider, or null when there is none."
                             }
                         },
                         {
@@ -3841,7 +3841,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Accepts the driver's own offer and returns the ride; refused on an untrusted phone, after expiry, once taken or while on a trip."
                             }
                         },
                         {
@@ -3876,7 +3876,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `reason` · string, max:255",
+                                "description": "Declines the driver's own offer (optional reason) and offers the ride to the next driver; an already answered offer is left alone.\n\n- `reason` · string, max:255",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"reason\": \"\"\n}",
@@ -3917,7 +3917,7 @@
                                         "trips"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The driver's trips, newest first and paginated; ?status takes a comma-separated list of statuses."
                             }
                         },
                         {
@@ -3945,7 +3945,7 @@
                                         "active"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The driver's ride in progress with its stops, rider and unread chat count, or null when there is none."
                             }
                         },
                         {
@@ -3979,7 +3979,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "One of the driver's own trips with its stops, rider and the rating the driver gave; 404 for anyone else's."
                             }
                         },
                         {
@@ -4014,7 +4014,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Marks the driver at the pickup and tells the rider; refused unless accepted, or when a fresh GPS fix is too far from the pickup."
                             }
                         },
                         {
@@ -4049,7 +4049,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `otp` · custom, string, max:10",
+                                "description": "Starts the trip after arrival once the rider's PIN matches (when PINs are on) and records the waiting time.\n\n- `otp` · custom, string, max:10",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"otp\": \"\"\n}",
@@ -4099,7 +4099,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Marks a stop on the driver's own started trip as reached (the first time only); 404 for a stop on another ride."
                             }
                         },
                         {
@@ -4134,7 +4134,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `distance_km` **required** · numeric, min:0, max:10000\n- `tolls` · numeric, min:0, max:200",
+                                "description": "Ends the trip: final fare from the GPS trail or the app's distance plus tolls, then settlement and rewards; card rides are charged.\n\n- `distance_km` **required** · numeric, min:0, max:10000\n- `tolls` · numeric, min:0, max:200",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"distance_km\": 1,\n    \"tolls\": 1\n}",
@@ -4178,7 +4178,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `reason` **required** · string, max:500\n- `rider_no_show` · boolean",
+                                "description": "Cancels before the trip starts: a rider no-show (after the free wait) charges the rider's fee, any other reason re-dispatches the ride.\n\n- `reason` **required** · string, max:500\n- `rider_no_show` · boolean",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"reason\": \"\",\n    \"rider_no_show\": true\n}",
@@ -4222,7 +4222,7 @@
                                         }
                                     ]
                                 },
-                                "description": ""
+                                "description": "Records the rider's cash as paid on the driver's own completed cash trip; refused when there is no cash left to collect."
                             }
                         },
                         {
@@ -4257,7 +4257,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `rating` **required** · integer, custom\n- `review` · string, custom\n- `tags` · array\n- `tags.*` · string, distinct, in",
+                                "description": "Rates the other person on a completed ride the user was on (404 otherwise) and updates their average; one rating each per ride.\n\n- `rating` **required** · integer, custom\n- `review` · string, custom\n- `tags` · array\n- `tags.*` · string, distinct, in",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"rating\": 1,\n    \"review\": \"\",\n    \"tags\": [\n        \"\"\n    ]\n}",
@@ -4333,7 +4333,7 @@
                                         "trips"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The driver's completed trips, latest first and paginated, with the fare, commission, earning and tip of each."
                             }
                         }
                     ]
@@ -4365,7 +4365,7 @@
                                         "withdrawals"
                                     ]
                                 },
-                                "description": ""
+                                "description": "The balance, the minimum withdrawal, the masked payout details, the open request and recent requests."
                             }
                         },
                         {
@@ -4392,7 +4392,7 @@
                                         "withdrawals"
                                     ]
                                 },
-                                "description": "- `amount` **required** · numeric, min:0.01, max:99999999",
+                                "description": "Requests a payout for the finance team and debits the wallet at once.\nRefused on an untrusted phone, without payout details, below the minimum, above the balance or while another is open.\n\n- `amount` **required** · numeric, min:0.01, max:99999999",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"amount\": 1\n}",
@@ -4433,7 +4433,7 @@
                                         "payout-details"
                                     ]
                                 },
-                                "description": "- `method` **required** · in:\"bank_transfer\",\"mobile_money\",\"paypal\"\n- `account_name` **required** · string, max:100\n- `bank_name` · required_if:method,bank_transfer, string, max:100\n- `account_number` · required_if:method,bank_transfer,mobile_money, string, max:40\n- `routing_code` · string, max:40\n- `provider` · required_if:method,mobile_money, string, max:50\n- `paypal_email` · required_if:method,paypal, email, max:150",
+                                "description": "Saves where payouts go (bank, mobile money or PayPal), encrypted, and returns them masked; refused on an untrusted phone.\n\n- `method` **required** · in:\"bank_transfer\",\"mobile_money\",\"paypal\"\n- `account_name` **required** · string, max:100\n- `bank_name` · required_if:method,bank_transfer, string, max:100\n- `account_number` · required_if:method,bank_transfer,mobile_money, string, max:40\n- `routing_code` · string, max:40\n- `provider` · required_if:method,mobile_money, string, max:50\n- `paypal_email` · required_if:method,paypal, email, max:150",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"method\": \"bank_transfer\",\n    \"account_name\": \"\",\n    \"bank_name\": \"\",\n    \"account_number\": \"\",\n    \"routing_code\": \"\",\n    \"provider\": \"\",\n    \"paypal_email\": \"user@example.com\"\n}",
@@ -4474,7 +4474,7 @@
                                         "incentives"
                                     ]
                                 },
-                                "description": ""
+                                "description": "Running targets for the driver's city and vehicle type with live progress; a target reached is paid into the wallet once."
                             }
                         }
                     ]
@@ -4506,7 +4506,7 @@
                                         "lost-items"
                                     ]
                                 },
-                                "description": ""
+                                "description": "Lost items reported on the driver's trips, newest first and paginated, each with its ride."
                             }
                         },
                         {
@@ -4540,7 +4540,7 @@
                                         }
                                     ]
                                 },
-                                "description": "- `status` **required** · in:\"reported\",\"driver_contacted\",\"found\",\"returned\",\"not_found\",\"closed\"\n- `response` · string, max:1000",
+                                "description": "Answers a report on the driver's own trip as found, returned or not found, and tells the rider; closed reports are refused.\n\n- `status` **required** · in:\"reported\",\"driver_contacted\",\"found\",\"returned\",\"not_found\",\"closed\"\n- `response` · string, max:1000",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"status\": \"reported\",\n    \"response\": \"\"\n}",
@@ -4590,7 +4590,7 @@
                                 }
                             ]
                         },
-                        "description": "",
+                        "description": "Checks the gateway's signature (400 when invalid) and re-checks the payment it names; unknown payments get a plain 200.",
                         "auth": {
                             "type": "noauth"
                         }
