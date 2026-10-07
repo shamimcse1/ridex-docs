@@ -419,7 +419,7 @@
 <td>Driver app (Flutter, Android and iOS)</td>
 </tr>
 <tr>
-<td><code>vendor/ridex_core/</code> in each app</td>
+<td><code>packages/ridex_core/</code> in each app</td>
 <td>Code shared by both apps: an identical copy inside each app (<a href="#core">Shared app code</a>)</td>
 </tr>
 <tr>
@@ -428,9 +428,10 @@
 </tr>
 </tbody>
 </table>
+<p>The backend comes without the folders Composer and npm create (<code>vendor/</code> and <code>public/build/</code>). The first setup step adds them.</p>
 <h3 id="introduction-setup-order">Setup order</h3>
 <ol>
-<li><strong>Backend.</strong> Upload <code>ridex_backend/</code>, point the web server at its <code>public/</code> folder and open <code>/install</code>, or use the terminal steps. See <a href="#backend">Backend</a> and <a href="#deployment">Deployment</a>.</li>
+<li><strong>Backend.</strong> In <code>ridex_backend/</code>, run <code>composer install --no-dev --optimize-autoloader</code> and <code>npm ci &amp;&amp; npm run build</code> (on your computer if your host has no terminal). Then upload it, point the web server at its <code>public/</code> folder and open <code>/install</code>, or use the terminal steps. See <a href="#backend">Backend</a> and <a href="#deployment">Deployment</a>.</li>
 <li><strong>Admin panel.</strong> Sign in, then set your branding, zones, vehicle types and fares (<a href="#backend-first-time-setup">First-time setup</a>).</li>
 <li><strong>Keys.</strong> Add your Google Maps, Firebase, Twilio and payment gateway keys (<a href="#deployment-5-third-party-services">Third-party services</a>).</li>
 <li><strong>Apps.</strong> Set the backend URL, Maps keys and Firebase files, then build both apps (<a href="#mobile-setup">Mobile app setup</a>).</li>
@@ -438,7 +439,7 @@
 </ol>
 <h3 id="introduction-requirements">Requirements</h3>
 <ul>
-<li><strong>Server:</strong> PHP 8.4.1+, MySQL 8+ or MariaDB 10.4+, a cron job and a queue worker. Node.js 20.19+ or 22.12+ only if you change the admin panel's styles: the package includes the built files.</li>
+<li><strong>Server:</strong> PHP 8.4.1+, MySQL 8+ or MariaDB 10.4+, a cron job and a queue worker. To install, Composer 2 and Node.js 20.19+ or 22.12+ (with npm), on the server or on your computer: they add the PHP packages and build the admin panel's CSS and JS.</li>
 <li><strong>Apps:</strong> Flutter 3.44+ (Dart 3.12+), with Android Studio for Android and Xcode for iOS. They run on Android 7.0 (API 24) or newer, built for API 36, and on iOS 15.0 or newer (<a href="#mobile-setup-2-requirements">details</a>).</li>
 <li><strong>Accounts:</strong> Google Cloud (Maps), Twilio for sign-in codes (or Firebase Phone Auth), and a payment gateway for card or online payments (cash and wallet payments need no gateway). Firebase is optional: it adds push notifications and instant ride updates. To publish the apps: Google Play Console and a paid Apple Developer account, which Firebase App Check also uses for Play Integrity and App Attest.</li>
 </ul>
@@ -449,8 +450,8 @@
                 <p>Laravel 12 REST API for the <strong>RideX Rider</strong> and <strong>RideX Driver</strong> Flutter apps, plus the Blade admin panel.</p>
 <pre><code>RideX/
 ├── ridex_backend/   ← this project (API + admin panel)
-├── ridex_rider/     ← Flutter rider app (shared app code in vendor/ridex_core)
-└── ridex_driver/    ← Flutter driver app (an identical copy of vendor/ridex_core)
+├── ridex_rider/     ← Flutter rider app (shared app code in packages/ridex_core)
+└── ridex_driver/    ← Flutter driver app (an identical copy of packages/ridex_core)
 </code></pre>
 <p><strong>Documentation:</strong> <a href="index.html"><code>docs/index.html</code></a> is the complete guide (backend, deployment, both apps and the API reference) as one page with its screenshots in <code>docs/assets/</code>, so it can be opened offline or uploaded to any static host. It's built from this README, <code>DEPLOYMENT.md</code>, the app READMEs and the pages in <code>docs/src/</code> (the version number comes from <code>CHANGELOG.md</code>), so rebuild it after editing any of them:</p>
 <pre><code class="language-bash">php artisan ridex:docs
@@ -460,13 +461,15 @@
 <ul>
 <li>PHP 8.4.1+ (extensions: ctype, curl, dom, fileinfo, json, mbstring, openssl, pdo_mysql, tokenizer, xml, xmlreader, zip)</li>
 <li>Composer 2</li>
+<li>Node.js 20.19+ or 22.12+ with npm, to build the admin panel's CSS and JS</li>
 <li>MySQL 8+ or MariaDB 10.4+ (XAMPP works for the database; its bundled PHP 8.2 is too old to run RideX)</li>
 </ul>
 <h3 id="backend-installation">Installation</h3>
 <p>For a live server (Apache/Nginx, shared hosting, Supervisor, Google Maps, Firebase, Twilio and payment gateway keys, troubleshooting), follow <a href="#deployment">DEPLOYMENT.md</a>.</p>
-<p><strong>Web installer:</strong> on a host without a terminal, upload the files (including <code>vendor/</code>), don't create <code>.env</code>, and open <code>{APP_URL}/install</code>. It checks the server, asks for the database and the super admin, then migrates, seeds and writes <code>.env</code>. It switches itself off afterwards: the app counts as installed once <code>.env</code> has an <code>APP_KEY</code>.</p>
+<p><strong>Web installer:</strong> the package comes without the two folders Composer and npm create, <code>vendor/</code> and <code>public/build/</code>. First run <code>composer install --no-dev --optimize-autoloader</code> and <code>npm ci &amp;&amp; npm run build</code> in this folder (on your computer if the host has no terminal), then upload the files, including those two folders. Don't create <code>.env</code>; open <code>{APP_URL}/install</code>. Until both folders are in place, every page shows the two commands instead. It checks the server, asks for the database and the super admin, then migrates, seeds and writes <code>.env</code>. It switches itself off afterwards: the app counts as installed once <code>.env</code> has an <code>APP_KEY</code>.</p>
 <p>Locally, with a terminal:</p>
 <pre><code class="language-bash">composer install
+npm ci &amp;&amp; npm run build
 cp .env.example .env
 php artisan key:generate
 # create an empty database named &quot;ridex&quot; (utf8mb4), then set DB_* in .env
@@ -508,7 +511,7 @@ OTP_PROVIDER=log       # codes go to storage/logs/laravel.log and come back as d
 <figure><img src="assets/screenshots/installation/05-admin-login.png" alt="The admin panel's sign-in page, with the demo accounts shown in demo mode" /><figcaption>Figure 1: The admin panel's sign-in page, with the demo accounts shown in demo mode</figcaption></figure>
 <figure><img src="assets/screenshots/configuration/01-dashboard.png" alt="The dashboard after the first sign-in, with the menu on the left" /><figcaption>Figure 2: The dashboard after the first sign-in, with the menu on the left</figcaption></figure>
 <ul>
-<li><strong>Prebuilt assets:</strong> compiled CSS/JS ships in <code>public/build</code>, so buyers don't need Node.js. To customize the styles, run <code>npm install &amp;&amp; npm run build</code>.</li>
+<li><strong>Assets:</strong> <code>npm ci &amp;&amp; npm run build</code> compiles the admin panel's CSS and JS into <code>public/build</code> (Vite). Run <code>npm run build</code> again after changing the styles or scripts.</li>
 <li><strong>White-label:</strong> the brand color comes from the <code>branding.primary_color</code> setting. It is applied as a CSS variable, and every <code>brand-*</code> shade is derived from it with <code>color-mix()</code>, so rebranding needs no rebuild.</li>
 <li><strong>Dark mode:</strong> follows the system setting and can be toggled from the top bar. The choice is saved in the browser.</li>
 <li><strong>Roles and permissions:</strong> every route is guarded by a permission slug (<code>-&gt;can('drivers.approve')</code>). The sidebar (<code>app/Support/AdminMenu.php</code>) only shows modules whose route exists and that the admin is allowed to open.</li>
@@ -676,7 +679,7 @@ OTP_PROVIDER=log       # codes go to storage/logs/laravel.log and come back as d
 <ol>
 <li><strong>Admin → Languages → Add language:</strong> code <code>de</code> (or <code>pt_BR</code> for a regional variant), the English and native names, and the text direction.</li>
 <li><strong>Backend texts</strong> (API messages, pushes, emails): copy <code>lang/es.json</code> to <code>lang/de.json</code> and <code>lang/es/</code> to <code>lang/de/</code>, then translate the values. Keep every <code>:placeholder</code> unchanged. <code>php artisan test --filter=LanguageFilesTest</code> fails while a key or placeholder is missing.</li>
-<li><strong>App texts:</strong> add a <code>_de</code> map with the same keys as <code>_en</code> to <code>vendor/ridex_core/lib/src/localization/core_translations.dart</code> (in both apps: the two copies stay identical), <code>ridex_rider/lib/localization/rider_translations.dart</code> and <code>ridex_driver/lib/localization/driver_translations.dart</code>, and register it next to the others (<code>'de': _de</code>). Keep every <code>@placeholder</code>. <code>flutter test</code> fails while one is missing. Country names in the phone number's country list stay in English until you add the language's code to <code>PhoneCountry.languages</code> and its name to every country in <code>vendor/ridex_core/lib/src/localization/phone_countries.dart</code>. Then release new app builds.</li>
+<li><strong>App texts:</strong> add a <code>_de</code> map with the same keys as <code>_en</code> to <code>packages/ridex_core/lib/src/localization/core_translations.dart</code> (in both apps: the two copies stay identical), <code>ridex_rider/lib/localization/rider_translations.dart</code> and <code>ridex_driver/lib/localization/driver_translations.dart</code>, and register it next to the others (<code>'de': _de</code>). Keep every <code>@placeholder</code>. <code>flutter test</code> fails while one is missing. Country names in the phone number's country list stay in English until you add the language's code to <code>PhoneCountry.languages</code> and its name to every country in <code>packages/ridex_core/lib/src/localization/phone_countries.dart</code>. Then release new app builds.</li>
 <li>Translate your pages, FAQs, quick messages and cancellation reasons in <strong>Content (CMS)</strong>.</li>
 </ol>
 <p>Until new app builds are out, the apps show a new language with English app texts, while API messages and content already appear translated.</p>
@@ -944,13 +947,15 @@ OTP_PROVIDER=log       # codes go to storage/logs/laravel.log and come back as d
 <pre><code class="language-bash">cd /var/www
 # upload or clone ridex_backend here, then:
 cd ridex_backend
-composer install --no-dev --optimize-autoloader   # skip if the package already contains vendor/
+composer install --no-dev --optimize-autoloader   # the PHP packages (vendor/)
+npm ci &amp;&amp; npm run build                           # the admin panel's CSS and JS (public/build/)
 cp .env.example .env                              # then edit APP_URL, DB_*, TWILIO_*, FIREBASE_* …
 php artisan key:generate
 php artisan migrate --seed --force
 php artisan storage:link
 php artisan optimize
 </code></pre>
+<p>The package comes without <code>vendor/</code> and <code>public/build/</code>: the first two commands create them. Node.js 20.19+ (with npm) is only needed for the build. Without it on the server, run <code>npm ci &amp;&amp; npm run build</code> on your computer and upload <code>public/build/</code>.</p>
 <p>Permissions: the web server user (usually <code>www-data</code>) must be able to write to <code>storage/</code> and <code>bootstrap/cache/</code>.</p>
 <pre><code class="language-bash">sudo chown -R www-data:www-data storage bootstrap/cache
 sudo chmod -R ug+rwX storage bootstrap/cache
@@ -1001,7 +1006,8 @@ sudo chmod -R ug+rwX storage bootstrap/cache
 <h3 id="deployment-3-shared-hosting-cpanel">3. Shared hosting (cPanel)</h3>
 <ol>
 <li>In <strong>Select PHP Version</strong> (or <strong>MultiPHP Manager</strong>), choose PHP 8.4 and enable the required extensions.</li>
-<li>Upload <code>ridex_backend/</code> <strong>next to</strong> <code>public_html</code>, not inside it, so <code>.env</code> and <code>storage/</code> are never reachable from the web.</li>
+<li>On your computer (or in cPanel's <strong>Terminal</strong>), run <code>composer install --no-dev --optimize-autoloader</code> and <code>npm ci &amp;&amp; npm run build</code> in <code>ridex_backend/</code>. The package comes without <code>vendor/</code> and <code>public/build/</code>; these commands create them.</li>
+<li>Upload <code>ridex_backend/</code>, with its new <code>vendor/</code> and <code>public/build/</code> folders, <strong>next to</strong> <code>public_html</code>, not inside it, so <code>.env</code> and <code>storage/</code> are never reachable from the web.</li>
 <li>Point the domain or subdomain's <strong>Document Root</strong> at <code>ridex_backend/public</code> (Domains → Manage). Use a subdomain such as <code>api.example.com</code> if the main domain's root can't be changed.</li>
 <li>Create a MySQL database and user (MySQL Databases), and give the user all privileges on it.</li>
 <li>Open <code>https://your-domain/install</code>. The <strong>web installer</strong> checks the server, then asks for the platform name and URL, the database and the super admin. It migrates, seeds, creates <code>public/storage</code> and writes <code>.env</code>, then switches itself off.
@@ -1014,7 +1020,7 @@ sudo chmod -R ug+rwX storage bootstrap/cache
 </ol>
 <p>The installer's screens, in order. Its last page also lists the cron job and queue worker for your server (section 4).</p>
 <figure><img src="assets/screenshots/installation/01-requirements.png" alt="The installer's server check: the PHP version, the extensions RideX needs and the folders it writes to" /><figcaption>Figure 9: The installer's server check: the PHP version, the extensions RideX needs and the folders it writes to</figcaption></figure>
-<figure><img src="assets/screenshots/installation/02-platform-database.png" alt="Platform and Database: the platform's name and URL, and the database and user from step 4" /><figcaption>Figure 10: Platform and Database: the platform's name and URL, and the database and user from step 4</figcaption></figure>
+<figure><img src="assets/screenshots/installation/02-platform-database.png" alt="Platform and Database: the platform's name and URL, and the database and user from step 5" /><figcaption>Figure 10: Platform and Database: the platform's name and URL, and the database and user from step 5</figcaption></figure>
 <figure><img src="assets/screenshots/installation/03-super-admin.png" alt="Super admin: the first admin account, and Demo mode, which stays off on a live platform" /><figcaption>Figure 11: Super admin: the first admin account, and Demo mode, which stays off on a live platform</figcaption></figure>
 <figure><img src="assets/screenshots/installation/04-installed.png" alt="The installer's last page, with the link to the admin panel" /><figcaption>Figure 12: The installer's last page, with the link to the admin panel</figcaption></figure>
 <h3 id="deployment-4-scheduler-and-queue-worker">4. Scheduler and queue worker</h3>
@@ -1043,6 +1049,7 @@ stdout_logfile=/var/www/ridex_backend/storage/logs/worker.log
 <p>This works, but queued work can wait up to a minute: offers expire late and dispatch feels slower. Use a VPS for a busy platform.</p>
 <p>After every deployment, run <code>php artisan queue:restart</code> so the worker loads the new code.</p>
 <h3 id="deployment-5-third-party-services">5. Third-party services</h3>
+<p><strong>These are external providers.</strong> Google Maps, Firebase, Twilio, the payment gateways and the other services below are run by other companies, not by RideX. You sign up with each one yourself and accept its terms, and you're responsible for any fees it charges for your usage, such as Maps requests, SMS messages or payment processing.</p>
 <h4 id="deployment-google-maps">Google Maps</h4>
 <p>RideX uses three keys. Create them in Google Cloud Console → APIs &amp; Services → Credentials, and restrict each one.</p>
 <table>
@@ -1237,7 +1244,8 @@ flutter build ipa --release --dart-define=API_BASE_URL=https://api.yourdomain.co
 <h3 id="deployment-6-updating">6. Updating</h3>
 <pre><code class="language-bash">php artisan down
 # replace the code, keeping .env and storage/
-composer install --no-dev --optimize-autoloader   # skip if the package already contains vendor/
+composer install --no-dev --optimize-autoloader   # the PHP packages (vendor/)
+npm ci &amp;&amp; npm run build                           # the admin panel's CSS and JS (public/build/)
 php artisan migrate --force
 php artisan optimize
 php artisan queue:restart
@@ -1267,12 +1275,16 @@ php artisan up
 <td>The <code>DB_*</code> values in <code>.env</code> don't match your database. Check <code>DB_HOST</code> (on shared hosting usually <code>localhost</code>), <code>DB_PORT</code>, <code>DB_DATABASE</code>, <code>DB_USERNAME</code> and <code>DB_PASSWORD</code>, then run <code>php artisan optimize</code>.</td>
 </tr>
 <tr>
+<td>Every page says &quot;One more step before installing&quot;</td>
+<td>The Composer packages (<code>vendor/</code>) or the built admin assets (<code>public/build/</code>) are missing: a fresh download has neither. Run the commands the page lists in the backend folder, or on your computer and then upload the folder again.</td>
+</tr>
+<tr>
 <td>&quot;…/vendor/autoload.php: Failed to open stream&quot; or <code>Class &quot;…&quot; not found</code></td>
-<td>Some files didn't upload. Upload <code>vendor/</code> again (the package includes it), or run <code>composer install --no-dev --optimize-autoloader</code>.</td>
+<td><code>vendor/</code> is missing or incomplete. Run <code>composer install --no-dev --optimize-autoloader</code> in the backend folder, or run it on your computer and upload <code>vendor/</code> again.</td>
 </tr>
 <tr>
 <td>Admin panel has no styling, or &quot;Vite manifest not found&quot;</td>
-<td>The document root isn't <code>public/</code>, or <code>public/build</code> is missing. Point the root at <code>public/</code>, upload the package's <code>public/build</code> folder, or run <code>npm install &amp;&amp; npm run build</code>.</td>
+<td>The document root isn't <code>public/</code>, or <code>public/build/</code> is missing. Point the root at <code>public/</code>, and run <code>npm ci &amp;&amp; npm run build</code> (on your computer if the server has no Node.js, then upload <code>public/build/</code>).</td>
 </tr>
 <tr>
 <td>&quot;419 Page Expired&quot; when you sign in to the admin panel</td>
@@ -1412,7 +1424,7 @@ php artisan up
 </tr>
 </tbody>
 </table>
-<p>Each app contains an identical copy of the code they share, in <code>vendor/ridex_core/</code> (<a href="#core">Shared app code</a>).</p>
+<p>Each app contains an identical copy of the code they share, in <code>packages/ridex_core/</code> (<a href="#core">Shared app code</a>).</p>
 <blockquote>
 <p><strong>Choose your own package name and bundle ID before you register the apps in Firebase</strong> (<a href="#mobile-setup-112-package-name-and-bundle-id">11.2</a>). Firebase's configuration files belong to one package name and bundle ID, so changing them later means downloading new files.</p>
 </blockquote>
@@ -1649,7 +1661,7 @@ flutter --version
 <p>Each app folder is a complete Flutter project:</p>
 <pre><code class="language-text">ridex_rider/
 ├── lib/                 The app's own code: main.dart, config/, features/, localization/
-├── vendor/ridex_core/   Code shared with the other app (an identical copy in both apps)
+├── packages/ridex_core/ Code shared with the other app (an identical copy in both apps)
 ├── assets/branding/     App icon and splash screen images
 ├── android/             Android project (Gradle)
 ├── ios/                 iOS project (Xcode and CocoaPods)
@@ -2151,7 +2163,7 @@ FIREBASE_ENCODED_APP_ID=YOUR_ENCODED_APP_ID
 <p><code>Info.plist</code> sets <code>NSAppTransportSecurity → NSAllowsLocalNetworking</code> to <code>YES</code>, so debug builds on the simulator can reach a backend on your Mac over <code>http://</code>. Release builds only accept an <code>https://</code> address (section 9.5).</p>
 <h3 id="mobile-setup-9-api-configuration">9. API Configuration</h3>
 <h4 id="mobile-setup-91-how-the-apps-find-the-backend">9.1 How the apps find the backend</h4>
-<p>The backend address is a build setting called <code>API_BASE_URL</code>, passed with <code>--dart-define</code> to every <code>flutter run</code> and <code>flutter build</code>. It isn't kept in a file. Both apps read it in <code>vendor/ridex_core/lib/src/config/core_config.dart</code>:</p>
+<p>The backend address is a build setting called <code>API_BASE_URL</code>, passed with <code>--dart-define</code> to every <code>flutter run</code> and <code>flutter build</code>. It isn't kept in a file. Both apps read it in <code>packages/ridex_core/lib/src/config/core_config.dart</code>:</p>
 <pre><code class="language-dart">static const String _definedBaseUrl = String.fromEnvironment('API_BASE_URL');
 
 /// Local dev defaults: the iOS simulator shares the host network, the Android emulator reaches it via 10.0.2.2.
@@ -2508,7 +2520,7 @@ flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000
 </tr>
 <tr>
 <td>Languages</td>
-<td>Admin → Languages; the apps' strings in <code>lib/localization/</code> and <code>vendor/ridex_core/lib/src/localization/</code></td>
+<td>Admin → Languages; the apps' strings in <code>lib/localization/</code> and <code>packages/ridex_core/lib/src/localization/</code></td>
 <td>Default language, enabled languages, texts</td>
 <td><a href="#backend-adding-a-language">Adding a language</a></td>
 </tr>
@@ -2901,7 +2913,7 @@ flutter build ipa --release --dart-define=API_BASE_URL=https://your-domain.com
 <ul>
 <li><strong>The Dart SDK is too old</strong> (&quot;Because ridex_rider requires SDK version ^3.12.2, version solving failed&quot;): install Flutter 3.44 or newer (3.1, 3.2).</li>
 <li><strong>&quot;N packages have newer versions incompatible with dependency constraints&quot;</strong> isn't an error: <code>pubspec.lock</code> keeps the tested versions.</li>
-<li><strong><code>vendor/ridex_core</code> is missing</strong> (<code>could not find package ridex_core at &quot;vendor/ridex_core&quot;</code>): keep that folder inside the app folder, where <code>pubspec.yaml</code> points.</li>
+<li><strong><code>packages/ridex_core</code> is missing</strong> (<code>could not find package ridex_core at &quot;packages/ridex_core&quot;</code>): keep that folder inside the app folder, where <code>pubspec.yaml</code> points.</li>
 <li><strong>The editor can't find a package</strong> (<code>Target of URI doesn't exist: 'package:…'</code>): run <code>flutter pub get</code> in the app's folder, the one with <code>pubspec.yaml</code>.</li>
 </ul>
 <h4 id="mobile-setup-153-android-build">15.3 Android build</h4>
@@ -3102,7 +3114,7 @@ flutter build ipa --release --dart-define=API_BASE_URL=https://your-domain.com
                 <blockquote>
 <p>The passenger-facing Flutter application for the <strong>RideX</strong> ride-hailing platform.</p>
 </blockquote>
-<p>RideX Rider is built with <strong>Flutter 3.44+</strong>, <strong>GetX</strong>, <strong>Dio</strong>, and <strong>Google Maps</strong>. It shares its core functionality with the RideX Driver application through the reusable <code>ridex_core</code> package located at <code>vendor/ridex_core</code>.</p>
+<p>RideX Rider is built with <strong>Flutter 3.44+</strong>, <strong>GetX</strong>, <strong>Dio</strong>, and <strong>Google Maps</strong>. It shares its core functionality with the RideX Driver application through the reusable <code>ridex_core</code> package located at <code>packages/ridex_core</code>.</p>
 <hr />
 <h3 id="rider-app-overview">✨ Overview</h3>
 <p>The Rider app provides the complete passenger experience, including:</p>
@@ -3939,7 +3951,7 @@ APPLE_CLIENT_IDS
 <td>Rider translations</td>
 </tr>
 <tr>
-<td><code>vendor/ridex_core/</code></td>
+<td><code>packages/ridex_core/</code></td>
 <td>Shared RideX application core</td>
 </tr>
 <tr>
@@ -4099,7 +4111,7 @@ flutter run \
                 <blockquote>
 <p>The driver-facing Flutter application for the <strong>RideX</strong> ride-hailing platform.</p>
 </blockquote>
-<p>RideX Driver is built with <strong>Flutter 3.44+</strong>, <strong>GetX</strong>, <strong>Dio</strong>, and <strong>Google Maps</strong>. It shares its core functionality with the Rider application through the reusable <code>ridex_core</code> package located at <code>vendor/ridex_core</code>.</p>
+<p>RideX Driver is built with <strong>Flutter 3.44+</strong>, <strong>GetX</strong>, <strong>Dio</strong>, and <strong>Google Maps</strong>. It shares its core functionality with the Rider application through the reusable <code>ridex_core</code> package located at <code>packages/ridex_core</code>.</p>
 <p>Shared functionality includes:</p>
 <ul>
 <li>Authentication</li>
@@ -5072,9 +5084,9 @@ flutter run \
             </section>
                     <section id="core">
                 <h2><span aria-hidden="true">🧩</span> Shared app code</h2>
-                <p>Shared foundation of the RideX rider and driver apps. Each app includes an identical copy at <code>vendor/ridex_core</code> and depends on it by path, adding only its own features on top.</p>
-<p><strong>Keep the two copies identical.</strong> After changing the shared code in one app, copy its whole <code>vendor/ridex_core</code> folder over the other app's, so both apps build from the same code. From the folder that holds both apps (or copy the folder in your file manager):</p>
-<pre><code class="language-bash">rsync -a --delete ridex_rider/vendor/ridex_core/ ridex_driver/vendor/ridex_core/
+                <p>Shared foundation of the RideX rider and driver apps. Each app includes an identical copy at <code>packages/ridex_core</code> and depends on it by path, adding only its own features on top.</p>
+<p><strong>Keep the two copies identical.</strong> After changing the shared code in one app, copy its whole <code>packages/ridex_core</code> folder over the other app's, so both apps build from the same code. From the folder that holds both apps (or copy the folder in your file manager):</p>
+<pre><code class="language-bash">rsync -a --delete ridex_rider/packages/ridex_core/ ridex_driver/packages/ridex_core/
 </code></pre>
 <h3 id="core-what-it-provides">What it provides</h3>
 <table>
@@ -6498,7 +6510,7 @@ Refused on an untrusted phone, without payout details, below the minimum, above 
                 <p>RideX uses the open-source packages, fonts, icons and services listed below. RideX's own code, artwork and documentation are licensed to you under your Envato Market license; these notices don't change that.</p>
 <p>Each package's full license text ships with the package:</p>
 <ul>
-<li><strong>Backend:</strong> <code>ridex_backend/vendor/&lt;package&gt;/</code></li>
+<li><strong>Backend:</strong> <code>ridex_backend/vendor/&lt;package&gt;/</code>, after <code>composer install</code></li>
 <li><strong>Admin panel scripts:</strong> <code>ridex_backend/node_modules/&lt;package&gt;/</code>, after <code>npm ci</code></li>
 <li><strong>Apps:</strong> your Flutter pub cache, after <code>flutter pub get</code></li>
 </ul>
@@ -6512,13 +6524,13 @@ Refused on an untrusted phone, without payout details, below the minimum, above 
 <li><code>dompdf/php-font-lib</code> (LGPL-2.1 or later)</li>
 <li><code>dompdf/php-svg-lib</code> (LGPL-3.0 or later)</li>
 </ul>
-<p>They ship unmodified, as PHP source in <code>vendor/dompdf/</code>, so you can replace or update them with Composer. That is what the LGPL asks for. Keep their license files (<code>LICENSE.LGPL</code>, <code>LICENSE</code>) when you redistribute them.</p>
+<p>Composer installs them unmodified, as PHP source, in <code>vendor/dompdf/</code>, so you can replace or update them with Composer. That is what the LGPL asks for. Keep their license files (<code>LICENSE.LGPL</code>, <code>LICENSE</code>) when you redistribute them.</p>
 </li>
 <li>
 <p><strong>Nette.</strong> <code>nette/schema</code> and <code>nette/utils</code> are offered under BSD-3-Clause, GPL-2.0 or GPL-3.0. RideX uses them under <strong>BSD-3-Clause</strong>.</p>
 </li>
 <li>
-<p><strong>DOMPurify.</strong> It comes with the Trix editor in the admin panel's <code>public/build/</code> scripts. It is offered under MPL-2.0 or Apache-2.0. RideX uses it under <strong>Apache-2.0</strong>.</p>
+<p><strong>DOMPurify.</strong> It comes with the Trix editor in the admin panel's scripts, which <code>npm run build</code> bundles into <code>public/build/</code>. It is offered under MPL-2.0 or Apache-2.0. RideX uses it under <strong>Apache-2.0</strong>.</p>
 </li>
 <li>
 <p><strong>MPL-2.0 (Linux desktop only).</strong> <code>dbus</code>, <code>geoclue</code> and <code>gsettings</code> come in through the <code>geolocator</code> plugin's Linux support. The Android and iOS builds don't contain them.</p>
@@ -6544,7 +6556,7 @@ Refused on an untrusted phone, without payout details, below the minimum, above 
 </tr>
 <tr>
 <td>DejaVu fonts</td>
-<td>PDF reports. Ships with dompdf in <code>vendor/dompdf/dompdf/lib/fonts/</code></td>
+<td>PDF reports. Come with dompdf, in <code>vendor/dompdf/dompdf/lib/fonts/</code> after <code>composer install</code></td>
 <td>Bitstream Vera and DejaVu font license (free to redistribute)</td>
 </tr>
 <tr>
@@ -6559,7 +6571,7 @@ Refused on an untrusted phone, without payout details, below the minimum, above 
 </tr>
 <tr>
 <td>Leaflet images (markers, layer switcher)</td>
-<td>Admin maps and the trip-share page, in <code>public/build/</code></td>
+<td>Admin maps and the trip-share page, bundled into <code>public/build/</code> by <code>npm run build</code></td>
 <td>BSD-2-Clause, © Volodymyr Agafonkin</td>
 </tr>
 <tr>
@@ -7891,7 +7903,7 @@ flutter pub get
 <p><strong>Which phones do the apps run on?</strong><br />
 Android 7.0 (API 24) or newer, and iPhones with iOS 15.0 or newer, in portrait. Building the iOS apps needs a Mac with Xcode.</p>
 <p><strong>What does the server need?</strong><br />
-PHP 8.4.1 or newer, Composer 2, and MySQL 8+ or MariaDB 10.4+, plus a cron entry and a queue worker (<a href="#backend-requirements">Requirements</a>). A VPS and cPanel shared hosting both work; on shared hosting, the web installer at <code>/install</code> sets up the database and settings without a terminal (<a href="#deployment-3-shared-hosting-cpanel">Shared hosting</a>).</p>
+PHP 8.4.1 or newer and MySQL 8+ or MariaDB 10.4+, plus a cron entry and a queue worker; installing also needs Composer 2 and Node.js 20.19+, on the server or on your computer (<a href="#backend-requirements">Requirements</a>). A VPS and cPanel shared hosting both work; on shared hosting, you run Composer and npm on your computer, upload the folder, and the web installer at <code>/install</code> sets up the database and settings (<a href="#deployment-3-shared-hosting-cpanel">Shared hosting</a>).</p>
 <p><strong>Can I try everything before I have SMS or payment keys?</strong><br />
 Yes. Demo mode adds demo riders and drivers, a fixed sign-in code and a Demo payment gateway (<a href="#backend-local-testing-and-demo-mode">Local testing and demo mode</a>, <a href="#backend-demo-credentials">Demo credentials</a>). Switch it off before going live.</p>
 <p><strong>Do the apps need Firebase?</strong><br />
