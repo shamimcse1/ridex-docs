@@ -1037,7 +1037,16 @@
                                 }
                             ]
                         },
-                        "description": "Asks the gateway how the user's own payment went once the hosted page closes; when paid, the money moves exactly once."
+                        "description": "Asks the gateway how the user's own payment went once the hosted page closes; when paid, the money moves exactly once.\nThe optional return_query is what the gateway added to the return URL the app's web view stopped at.\n\n- `return_query` · array, custom\n- `return_query.*` · string, custom",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"return_query\": [\n        \"\"\n    ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
                     }
                 },
                 {
@@ -1954,6 +1963,11 @@
                                     {
                                         "key": "X-Locale",
                                         "value": "{{locale}}"
+                                    },
+                                    {
+                                        "key": "Idempotency-Key",
+                                        "value": "{{$guid}}",
+                                        "disabled": true
                                     }
                                 ],
                                 "url": {
@@ -1966,10 +1980,10 @@
                                         "rides"
                                     ]
                                 },
-                                "description": "Books at the quoted price and starts dispatch (scheduled rides wait); refused for an expired quote, a ride in progress or unpaid dues.\n\n- `quote_id` **required** · uuid\n- `payment_method` **required** · in:\"cash\",\"card\",\"wallet\",\"online\"\n- `pickup_address` **required** · string, max:500\n- `drop_address` · string, max:500\n- `stop_addresses` · array, max:3\n- `stop_addresses.*` · string, max:500\n- `pickup_note` · string, max:500\n- `passenger_name` · string, max:100, required_with:passenger_phone\n- `passenger_phone` · string, max:30, required_with:passenger_name",
+                                "description": "Books at the quoted price and starts dispatch (scheduled rides wait); refused for an expired or used quote, a ride in progress\nor unpaid dues. With an optional Idempotency-Key header, a retry answers 200 with the ride already booked.\n\n- `quote_id` **required** · uuid\n- `payment_method` **required** · in:\"cash\",\"card\",\"wallet\",\"online\"\n- `pickup_address` · present, string, max:500\n- `drop_address` · string, max:500\n- `stop_addresses` · array, max:3\n- `stop_addresses.*` · string, max:500\n- `pickup_note` · string, max:500\n- `passenger_name` · string, max:100, required_with:passenger_phone\n- `passenger_phone` · string, max:30, required_with:passenger_name\n- `passenger_count` · integer, min:1\n- `luggage_count` · integer, min:0, max:10",
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\n    \"quote_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"payment_method\": \"cash\",\n    \"pickup_address\": \"\",\n    \"drop_address\": \"\",\n    \"stop_addresses\": [\n        \"\"\n    ],\n    \"pickup_note\": \"\",\n    \"passenger_name\": \"\",\n    \"passenger_phone\": \"\"\n}",
+                                    "raw": "{\n    \"quote_id\": \"00000000-0000-0000-0000-000000000000\",\n    \"payment_method\": \"cash\",\n    \"pickup_address\": \"\",\n    \"drop_address\": \"\",\n    \"stop_addresses\": [\n        \"\"\n    ],\n    \"pickup_note\": \"\",\n    \"passenger_name\": \"\",\n    \"passenger_phone\": \"\",\n    \"passenger_count\": 1,\n    \"luggage_count\": 1\n}",
                                     "options": {
                                         "raw": {
                                             "language": "json"
@@ -2243,6 +2257,85 @@
                             }
                         },
                         {
+                            "name": "rider.rides.driver-no-show",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "X-Locale",
+                                        "value": "{{locale}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/rider/rides/:ride/driver-no-show",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "rider",
+                                        "rides",
+                                        ":ride",
+                                        "driver-no-show"
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "ride",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                "description": "The rider reports that the accepted driver never arrived: the ride goes to another driver (see NoShowService)."
+                            }
+                        },
+                        {
+                            "name": "rider.rides.no-show-dispute",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "X-Locale",
+                                        "value": "{{locale}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/rider/rides/:ride/no-show-dispute",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "rider",
+                                        "rides",
+                                        ":ride",
+                                        "no-show-dispute"
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "ride",
+                                            "value": ""
+                                        }
+                                    ]
+                                },
+                                "description": "The rider contests the no-show fee charged on their ride; the support team reviews it.\n\n- `reason` **required** · string, max:500",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"reason\": \"\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
                             "name": "rider.rides.rate",
                             "request": {
                                 "method": "POST",
@@ -2418,7 +2511,7 @@
                                         "saved-places"
                                     ]
                                 },
-                                "description": "Saves a place for the rider; there can be only one home and one work place.\n\n- `label` **required** · in, when\n- `name` **required** · string, max:100\n- `address` **required** · string, max:500\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180",
+                                "description": "Saves a place for the rider; there can be only one home and one work place.\n\n- `label` **required** · in, when\n- `name` **required** · string, max:100\n- `address` · present, string, max:500\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"label\": \"\",\n    \"name\": \"\",\n    \"address\": \"\",\n    \"lat\": 40.758,\n    \"lng\": -73.9855\n}",
@@ -2461,7 +2554,7 @@
                                         }
                                     ]
                                 },
-                                "description": "Edits one of the rider's own places (still one home and one work at most); 404 for anyone else's.\n\n- `label` **required** · in, when\n- `name` **required** · string, max:100\n- `address` **required** · string, max:500\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180",
+                                "description": "Edits one of the rider's own places (still one home and one work at most); 404 for anyone else's.\n\n- `label` **required** · in, when\n- `name` **required** · string, max:100\n- `address` · present, string, max:500\n- `lat` **required** · numeric, between:-90,90\n- `lng` **required** · numeric, between:-180,180",
                                 "body": {
                                     "mode": "raw",
                                     "raw": "{\n    \"label\": \"\",\n    \"name\": \"\",\n    \"address\": \"\",\n    \"lat\": 40.758,\n    \"lng\": -73.9855\n}",
